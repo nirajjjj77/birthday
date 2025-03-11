@@ -19,13 +19,7 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
       </head>
-      <body style={{ 
-        minHeight: '100dvh',
-        margin: 0,
-        padding: 0,
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
+      <body>
         {children}
         <Analytics />
       </body>
