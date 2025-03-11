@@ -16,7 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+      </head>
+      <body style={{ minHeight: '100vh', paddingTop: 'env(safe-area-inset-top)' }}>
         {children}
         <Analytics />
       </body>
