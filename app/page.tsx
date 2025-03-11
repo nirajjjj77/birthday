@@ -757,6 +757,8 @@ export default function BirthdayWish() {
               id="interactive-shinchan"
               width={300}
               height={300}
+              priority
+              unoptimized
             />
             <span className="text-overlay">Hello!</span>
           </div>
