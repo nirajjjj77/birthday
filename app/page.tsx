@@ -621,8 +621,9 @@ export default function BirthdayWish() {
     function setupMessageBox() {
       const mainMessage = document.getElementById("main-message")
       const secondMessage = document.getElementById("second-message")
+      const thirdMessage = document.getElementById("third-message")
 
-      if (!mainMessage || !secondMessage) return // Add safety check
+      if (!mainMessage || !secondMessage || !thirdMessage) return // Add safety check
 
       mainMessage.addEventListener("click", () => {
         // First show fireworks
@@ -631,6 +632,16 @@ export default function BirthdayWish() {
         // After 5 seconds, show the second message
         setTimeout(() => {
           secondMessage.classList.add("visible")
+           
+          // After 4 more seconds, hide the second message and show the third message
+          setTimeout(() => {
+            secondMessage.classList.remove("visible")
+        
+            // Add a small delay before showing the third message for smoother transition
+            setTimeout(() => {
+              thirdMessage.classList.add("visible")
+            }, 300)
+          }, 4000)
         }, 5000)
       })
     }
@@ -711,6 +722,9 @@ export default function BirthdayWish() {
         </div>
         <div className="message-box second-box" id="second-message">
           <span className="text">Are you ready?</span>
+        </div>
+        <div className="message-box second-box" id="third-message">
+          <span className="text">Let's begin...</span>
         </div>
       </div>
     </>
