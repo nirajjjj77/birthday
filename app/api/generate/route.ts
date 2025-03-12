@@ -1,20 +1,25 @@
-import { NextResponse } from 'next/server';
-import { togetherai } from '@ai-sdk/togetherai';
-import { generateText } from 'ai';
+import { NextRequest, NextResponse } from "next/server";
+import { togetherai } from "@ai-sdk/togetherai";
+import { generateText } from "ai";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const { prompt } = await req.json();
 
-    // Generate text using the AI model
+    if (!prompt) {
+      return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
+    }
+
     const { text } = await generateText({
-      model: togetherai('meta-llama/Meta-Llama-3-1.8B-Instruct-Turbo'),
-      prompt: prompt || 'Write a vegetarian lasagna recipe for 4 people.',
+      model: togetherai("meta-llama/Meta-Llama-3-1.8B-Instruct-Turbo"),
+      prompt: prompt,
     });
 
     return NextResponse.json({ text });
   } catch (error) {
-    return NextResponse.json({ error: 'Error generating text' }, { status: 500 });
+    console.error("AI API Error:", error);
+    return NextResponse.json({ error: "Error generating text" }, { status: 500 });
   }
 }
+
  
