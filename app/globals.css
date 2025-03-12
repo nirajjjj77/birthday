@@ -114,41 +114,22 @@ body {
 }
 
 .second-box {
-  background: white;
-  padding: 20px;
+  background: linear-gradient(135deg, #ff6b99 0%, #ff96b8 100%);
+  padding: 5vh 8vw;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.5s ease;
   pointer-events: none;
-  width: auto;
+  width: 90%;
+  max-width: 600px;
 }
 
-.image-container {
-  position: relative;
-  display: inline-block;
-  width: 300px;
-  margin: 0 auto;
-}
-
-.interactive-shinchan {
-  width: 100%;
-  height: auto;
-  cursor: pointer;
-  transition: transform 0.3s ease, filter 0.3s ease;
-  border-radius: 10px;
-  display: block;
-  margin: 0 auto;
-}
-
-.text-overlay {
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-  color: #ff6b99;
-  font-size: 2rem;
-  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
-  font-weight: bold;
+.second-box .text {
+  font-size: 1.8rem; /* Same font size as first message */
+  color: white;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
 .second-box.visible {

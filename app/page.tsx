@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect } from "react"
-import Image from "next/image"
 import React from "react"
 
 export default function BirthdayWish() {
@@ -711,19 +710,7 @@ export default function BirthdayWish() {
           <span className="emoji">✨</span>
         </div>
         <div className="message-box second-box" id="second-message">
-          <div className="image-container">
-            <Image
-              src="https://i.ibb.co/CK8d5D7t/shinchan1.jpg"
-              alt="Shinchan"
-              className="interactive-shinchan"
-              id="interactive-shinchan"
-              width={300}
-              height={300}
-              priority
-              unoptimized
-            />
-            <span className="text-overlay">Hello!</span>
-          </div>
+          <span className="text">Are you ready?</span>
         </div>
       </div>
     </>
