@@ -625,6 +625,9 @@ export default function BirthdayWish() {
 
       if (!mainMessage || !secondMessage || !thirdMessage) return // Add safety check
 
+      // Initially hide the third message completely
+      thirdMessage.style.display = "none";
+
       mainMessage.addEventListener("click", () => {
         // First show fireworks
         createFireworks()
@@ -639,6 +642,9 @@ export default function BirthdayWish() {
         
             // Add a small delay before showing the third message for smoother transition
             setTimeout(() => {
+              // Make sure third message is in the same DOM position as second
+              secondMessage.style.display = "none";
+              thirdMessage.style.display = ""; // Reset to default display value
               thirdMessage.classList.add("visible")
             }, 300)
           }, 4000)
@@ -720,11 +726,14 @@ export default function BirthdayWish() {
           <span className="text">I have a small surprise for you</span>
           <span className="emoji">✨</span>
         </div>
-        <div className="message-box second-box" id="second-message">
-          <span className="text">Are you ready?</span>
-        </div>
-        <div className="message-box second-box" id="third-message">
-          <span className="text">Let's begin...</span>
+
+        <div className="secondary-messages" style={{ position: 'relative', height: '100px', width: '100%'}}>
+          <div className="message-box second-box" id="second-message">
+            <span className="text">Are you ready?</span>
+          </div>
+          <div className="message-box second-box" id="third-message">
+            <span className="text">Let's begin...</span>
+          </div>
         </div>
       </div>
     </>
