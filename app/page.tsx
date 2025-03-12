@@ -522,7 +522,9 @@ export default function BirthdayWish() {
       // Particle size - increased for better visibility
       const size = Math.random() * 8 + 4 // Slightly larger particles
       const angle = Math.random() * Math.PI * 2
-      const velocity = Math.random() * 8 + 4 // Increased velocity
+      const velocity = isMobile && window.innerHeight > window.innerWidth 
+        ? Math.random() * 7 + 3 // More vertical spread for portrait phones
+        : Math.random() * 8 + 4;
 
       // Brighter colors with higher lightness
       const hue = Math.random() * 60 + [0, 120, 240][Math.floor(Math.random() * 3)]
