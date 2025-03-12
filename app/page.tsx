@@ -767,7 +767,7 @@ export default function BirthdayWish() {
           
           const startTime = performance.now();
           
-          function animateSpark(timestamp) {
+          function animateSpark(timestamp: number) {
             const elapsed = timestamp - startTime;
             const progress = elapsed / 1000; // 1 second animation
             
