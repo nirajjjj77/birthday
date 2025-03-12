@@ -713,8 +713,8 @@ export default function BirthdayWish() {
         
         document.body.appendChild(emoji);
         
-        // Automatic disappear after random time (1.5-3 seconds)
-        const disappearTime = Math.random() * 1500 + 1500;
+        // Automatic disappear after random time (0.5-1 seconds)
+        const disappearTime = Math.random() * 500 + 500;
         setTimeout(() => {
           if (emoji.parentNode) {
             emoji.style.opacity = '0';
@@ -840,7 +840,7 @@ export default function BirthdayWish() {
       congratsMessage.id = 'congrats-message';
       congratsMessage.innerHTML = `
         <span class="emoji">🎉</span>
-        <span class="text">Amazing! You caught all the cakes!</span>
+        <span class="text">Amazing! Click to proceed</span>
         <span class="emoji">🎉</span>
       `;
       
