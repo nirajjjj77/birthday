@@ -257,6 +257,48 @@ body {
   }
 }
 
+.cake-emoji {
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  position: absolute;
+  user-select: none;
+  animation: pop-in 0.5s ease forwards;
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-10deg);
+  }
+  70% {
+    transform: scale(1.2) rotate(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+.cake-emoji:hover {
+  transform: scale(1.2);
+}
+
+.score-display {
+  animation: fade-in 0.5s ease forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) translateX(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateX(-50%);
+  }
+}
+
 .loading {
   position: fixed;
   top: 0;

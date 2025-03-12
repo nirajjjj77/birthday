@@ -2,8 +2,13 @@
 
 import { useEffect } from "react"
 import React from "react"
+import { useState, useRef } from "react"
 
 export default function BirthdayWish() {
+  // Add a state variable to track score
+  const [score, setScore] = useState(0);
+  const gameActiveRef = useRef(false);
+
   useEffect(() => {
     const appHeight = () => {
       const doc = document.documentElement
@@ -622,7 +627,243 @@ export default function BirthdayWish() {
       requestAnimationFrame(animateParticle)
     }
 
-    // Add click event to show fireworks and then reveal the second message
+    // Add emoji catch game logic
+    function startEmojiGame() {
+      gameActiveRef.current = true;
+      const messagesContainer = document.querySelector('.messages-container');
+      const scoreDisplay = document.createElement('div');
+      scoreDisplay.id = 'score-display';
+      scoreDisplay.className = 'score-display';
+      scoreDisplay.textContent = 'Score: 0/10';
+      
+      // Style the score display
+      scoreDisplay.style.position = 'fixed';
+      scoreDisplay.style.top = '20px';
+      scoreDisplay.style.left = '50%';
+      scoreDisplay.style.transform = 'translateX(-50%)';
+      scoreDisplay.style.padding = '10px 20px';
+      scoreDisplay.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+      scoreDisplay.style.borderRadius = '20px';
+      scoreDisplay.style.fontWeight = 'bold';
+      scoreDisplay.style.fontSize = '1.2rem';
+      scoreDisplay.style.color = '#6a1b9a';
+      scoreDisplay.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)';
+      scoreDisplay.style.zIndex = '1000';
+      
+      document.body.appendChild(scoreDisplay);
+      
+      let playerScore = 0;
+      let emojiInterval;
+      
+      function createEmoji() {
+        if (!gameActiveRef.current) return;
+        
+        // Check if we've reached 10 points
+        if (playerScore >= 10) {
+          clearInterval(emojiInterval);
+          endGame(true);
+          return;
+        }
+        
+        // Create emoji element
+        const emoji = document.createElement('div');
+        emoji.className = 'cake-emoji';
+        emoji.textContent = '🎂';
+        
+        // Style the emoji
+        emoji.style.position = 'absolute';
+        emoji.style.fontSize = '3rem';
+        emoji.style.cursor = 'pointer';
+        emoji.style.transition = 'all 0.2s ease';
+        emoji.style.filter = 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.8))';
+        emoji.style.zIndex = '100';
+        emoji.style.userSelect = 'none';
+        
+        // Random position - avoid edges
+        const safeMargin = 100; // 100px from edges
+        const left = Math.random() * (window.innerWidth - 2 * safeMargin) + safeMargin;
+        const top = Math.random() * (window.innerHeight - 2 * safeMargin) + safeMargin;
+        
+        emoji.style.left = `${left}px`;
+        emoji.style.top = `${top}px`;
+        
+        // Add click handler
+        emoji.addEventListener('click', () => {
+          if (!gameActiveRef.current) return;
+          
+          // Increase score
+          playerScore++;
+          scoreDisplay.textContent = `Score: ${playerScore}/10`;
+          
+          // Animation for clicked emoji
+          emoji.style.transform = 'scale(1.5)';
+          emoji.style.opacity = '0';
+          
+          // Show spark effect when clicked
+          createClickSpark(left, top);
+          
+          // Remove after animation
+          setTimeout(() => {
+            if (emoji.parentNode) {
+              emoji.parentNode.removeChild(emoji);
+            }
+          }, 300);
+        });
+        
+        document.body.appendChild(emoji);
+        
+        // Automatic disappear after random time (1.5-3 seconds)
+        const disappearTime = Math.random() * 1500 + 1500;
+        setTimeout(() => {
+          if (emoji.parentNode) {
+            emoji.style.opacity = '0';
+            setTimeout(() => {
+              if (emoji.parentNode) {
+                emoji.parentNode.removeChild(emoji);
+              }
+            }, 300);
+          }
+        }, disappearTime);
+      }
+      
+      // Create visual effect when emoji is clicked
+      function createClickSpark(x, y) {
+        const sparkContainer = document.createElement('div');
+        sparkContainer.style.position = 'absolute';
+        sparkContainer.style.left = `${x}px`;
+        sparkContainer.style.top = `${y}px`;
+        sparkContainer.style.zIndex = '99';
+        sparkContainer.style.pointerEvents = 'none';
+        
+        document.body.appendChild(sparkContainer);
+        
+        // Create multiple spark particles
+        const colors = ['#FF9800', '#FFEB3B', '#FFC107', '#FF5722', '#E91E63'];
+        
+        for (let i = 0; i < 12; i++) {
+          const spark = document.createElement('div');
+          const size = Math.random() * 10 + 5;
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          
+          spark.style.position = 'absolute';
+          spark.style.width = `${size}px`;
+          spark.style.height = `${size}px`;
+          spark.style.backgroundColor = color;
+          spark.style.borderRadius = '50%';
+          spark.style.transform = 'translate(-50%, -50%)';
+          spark.style.opacity = '1';
+          
+          sparkContainer.appendChild(spark);
+          
+          // Animate each spark particle
+          const angle = Math.random() * Math.PI * 2;
+          const velocity = Math.random() * 10 + 5;
+          const vx = Math.cos(angle) * velocity;
+          const vy = Math.sin(angle) * velocity;
+          
+          let posX = 0;
+          let posY = 0;
+          
+          const startTime = performance.now();
+          
+          function animateSpark(timestamp) {
+            const elapsed = timestamp - startTime;
+            const progress = elapsed / 1000; // 1 second animation
+            
+            if (progress >= 1) {
+              if (spark.parentNode) {
+                spark.parentNode.removeChild(spark);
+              }
+              
+              if (sparkContainer.childNodes.length === 0 && sparkContainer.parentNode) {
+                sparkContainer.parentNode.removeChild(sparkContainer);
+              }
+              return;
+            }
+            
+            posX += vx * 0.06;
+            posY += vy * 0.06;
+            
+            // Add gravity effect
+            posY += progress * 9;
+            
+            // Set position
+            spark.style.transform = `translate(calc(-50% + ${posX}px), calc(-50% + ${posY}px))`;
+            
+            // Fade out
+            spark.style.opacity = (1 - progress).toString();
+            
+            requestAnimationFrame(animateSpark);
+          }
+          
+          requestAnimationFrame(animateSpark);
+        }
+      }
+      
+      // Determine emoji spawn speed based on device
+      const isMobile = window.innerWidth <= 768;
+      const spawnInterval = isMobile ? 1000 : 800; // Slightly easier on mobile
+      
+      // Start spawning emojis
+      emojiInterval = setInterval(createEmoji, spawnInterval);
+      
+      // Also spawn one immediately
+      createEmoji();
+      
+      // Function to end the game
+      function endGame(success) {
+        clearInterval(emojiInterval);
+        gameActiveRef.current = false;
+        
+        // Remove any remaining emojis
+        document.querySelectorAll('.cake-emoji').forEach(elem => {
+          if (elem.parentNode) {
+            elem.parentNode.removeChild(elem);
+          }
+        });
+        
+        if (scoreDisplay.parentNode) {
+          scoreDisplay.parentNode.removeChild(scoreDisplay);
+        }
+        
+        if (success) {
+          // Show success message or proceed to next stage
+          createCongratulationsMessage();
+        }
+      }
+    }
+    
+    function createCongratulationsMessage() {
+      const congratsMessage = document.createElement('div');
+      congratsMessage.className = 'message-box';
+      congratsMessage.id = 'congrats-message';
+      congratsMessage.innerHTML = `
+        <span class="emoji">🎉</span>
+        <span class="text">Amazing! You caught all the cakes!</span>
+        <span class="emoji">🎉</span>
+      `;
+      
+      // Style similar to other message boxes
+      congratsMessage.style.opacity = '0';
+      congratsMessage.style.transform = 'translateY(20px)';
+      
+      // Add to container
+      const messagesContainer = document.querySelector('.messages-container');
+      messagesContainer?.appendChild(congratsMessage);
+      
+      // Create fireworks to celebrate
+      createFireworks();
+      
+      // Show message
+      setTimeout(() => {
+        congratsMessage.style.opacity = '1';
+        congratsMessage.style.transform = 'translateY(0)';
+      }, 100);
+      
+      // You can add logic here to proceed to the next part of your birthday surprise
+    }
+
+    // Modified setupMessageBox function to include the emoji game
     function setupMessageBox() {
       const mainMessage = document.getElementById("main-message")
       const secondMessage = document.getElementById("second-message")
@@ -663,6 +904,22 @@ export default function BirthdayWish() {
                   thirdMessage.style.display = "none";
                   fourthMessage.style.display = ""; // Reset to default display value
                   fourthMessage.classList.add("visible")
+
+                  // After 5 seconds, start the game
+                  setTimeout(() => {
+                    fourthMessage.classList.remove("visible");
+                    mainMessage.classList.remove("visible");
+                    
+                    // Small delay before starting the game
+                    setTimeout(() => {
+                      // Hide all message boxes
+                      fourthMessage.style.display = "none";
+                      mainMessage.style.display = "none";
+                      
+                      // Start the emoji catch game
+                      startEmojiGame();
+                    }, 300);
+                  }, 5000);
                 }, 300)
               }, 5000) // 5 seconds for the third message
             }, 300)
