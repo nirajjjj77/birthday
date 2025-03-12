@@ -653,7 +653,8 @@ export default function BirthdayWish() {
       document.body.appendChild(scoreDisplay);
       
       let playerScore = 0;
-      let emojiInterval;
+      let emojiInterval: NodeJS.Timeout;
+
       
       function createEmoji() {
         if (!gameActiveRef.current) return;
