@@ -751,7 +751,7 @@ export default function BirthdayWish() {
         <div className="message-box second-box" id="second-message">
           <div className="image-container">
             <Image
-              src="https://i.ibb.co/ymML55Yz/shinchan1.jpg"
+              src="https://i.ibb.co/CK8d5D7t/shinchan1.jpg"
               alt="Shinchan"
               className="interactive-shinchan"
               id="interactive-shinchan"
