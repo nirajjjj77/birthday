@@ -713,8 +713,8 @@ export default function BirthdayWish() {
         
         document.body.appendChild(emoji);
         
-        // Automatic disappear after random time (0.5-1 seconds)
-        const disappearTime = Math.random() * 500 + 500;
+        // Automatic disappear after random time (1-2 seconds)
+        const disappearTime = Math.random() * 1000 + 1000;
         setTimeout(() => {
           if (emoji.parentNode) {
             emoji.style.opacity = '0';
