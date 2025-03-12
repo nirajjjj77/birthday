@@ -50,14 +50,21 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
   width: 100%;
-  padding: 20px;
+  max-width: 600px;
+  text-align: center;
+  z-index: 10;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
 .message-box {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateX(-50%) translateY(20px);
   transition: all 0.5s ease;
   background: linear-gradient(135deg, #ff6b99 0%, #ff96b8 100%);
   padding: 5vh 8vw;
@@ -76,6 +83,8 @@ body {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.6);
   cursor: pointer;
+  margin: 0 auto;
+  left: 50%;
 }
 
 #main-message {
@@ -90,7 +99,7 @@ body {
 
 .message-box.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
 }
 
 .message-box span.emoji {
@@ -102,7 +111,7 @@ body {
 }
 
 .message-box:active {
-  transform: scale(0.98);
+  transform: translateX(-50%) scale(0.98);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
