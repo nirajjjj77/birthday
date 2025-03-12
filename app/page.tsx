@@ -812,7 +812,7 @@ export default function BirthdayWish() {
       createEmoji();
       
       // Function to end the game
-      function endGame(success) {
+      function endGame(success: boolean) {
         clearInterval(emojiInterval);
         gameActiveRef.current = false;
         
