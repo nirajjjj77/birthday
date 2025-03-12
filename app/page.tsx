@@ -13,7 +13,7 @@ export default function BirthdayWish() {
     appHeight()
     // Create a star shape SVG - performance optimized
     function createStarSVG(size: number, color: string, opacity: number) {
-      const points = []
+      const points: string[] = []
       const outerRadius = size / 2
       const innerRadius = outerRadius * 0.4
       const numPoints = 5
@@ -518,7 +518,7 @@ export default function BirthdayWish() {
       if (!parent) return // Safety check
 
       const isMobile = window.innerWidth <= 768;
-      
+
       const particle = document.createElement("div")
       particle.classList.add("firework-particle")
 
