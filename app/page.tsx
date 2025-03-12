@@ -627,11 +627,13 @@ export default function BirthdayWish() {
       const mainMessage = document.getElementById("main-message")
       const secondMessage = document.getElementById("second-message")
       const thirdMessage = document.getElementById("third-message")
+      const fourthMessage = document.getElementById("fourth-message")
 
-      if (!mainMessage || !secondMessage || !thirdMessage) return // Add safety check
+      if (!mainMessage || !secondMessage || !thirdMessage || !fourthMessage) return // Add safety check
 
-      // Initially hide the third message completely
+      // Initially hide the third and fourth message completely
       thirdMessage.style.display = "none";
+      fourthMessage.style.display = "none";
 
       mainMessage.addEventListener("click", () => {
         // First show fireworks
@@ -651,8 +653,20 @@ export default function BirthdayWish() {
               secondMessage.style.display = "none";
               thirdMessage.style.display = ""; // Reset to default display value
               thirdMessage.classList.add("visible")
+
+              // After 5 seconds, hide the third message and show the fourth message
+              setTimeout(() => {
+                thirdMessage.classList.remove("visible")
+            
+                // Add a small delay before showing the fourth message
+                setTimeout(() => {
+                  thirdMessage.style.display = "none";
+                  fourthMessage.style.display = ""; // Reset to default display value
+                  fourthMessage.classList.add("visible")
+                }, 300)
+              }, 5000) // 5 seconds for the third message
             }, 300)
-          }, 4000)
+          }, 5000)
         }, 5000)
       })
     }
@@ -738,6 +752,9 @@ export default function BirthdayWish() {
           </div>
           <div className="message-box second-box" id="third-message">
             <span className="text">Let's begin...</span>
+          </div>
+          <div className="message-box second-box" id="fourth-message">
+            <span className="text">Catch the emoji 🎂 to proceed</span>
           </div>
         </div>
       </div>
