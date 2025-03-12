@@ -142,21 +142,13 @@ body {
 
 .text-overlay {
   position: absolute;
-  top: 10px;
-  right: 20px;
-  transform: none;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
   color: #ff6b99;
   font-size: 2rem;
   text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
   font-weight: bold;
-}
-
-.interactive-shinchan:hover {
-  transform: scale(1.1);
-}
-
-.interactive-shinchan:active {
-  transform: scale(0.9);
 }
 
 .second-box.visible {

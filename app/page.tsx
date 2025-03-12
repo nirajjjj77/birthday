@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import Image from "next/image"
+import React from "react"
 
 export default function BirthdayWish() {
   useEffect(() => {
@@ -631,45 +632,6 @@ export default function BirthdayWish() {
         // After 5 seconds, show the second message
         setTimeout(() => {
           secondMessage.classList.add("visible")
-
-          // Add the new dog interaction code here
-          const shinchan = document.getElementById("interactive-shinchan")
-          if (shinchan) {
-            // Click event
-            shinchan.addEventListener("click", function () {
-              this.style.transition = "transform 1s ease"
-              this.style.transform = "rotate(360deg)"
-
-              setTimeout(() => {
-                this.style.transform = "none"
-              }, 1000)
-            })
-
-            // Hover effects
-            shinchan.addEventListener("mouseover", function () {
-              this.style.filter = "brightness(1.2)"
-              this.style.transform = "scale(1.1) rotate(5deg)"
-            })
-
-            shinchan.addEventListener("mouseout", function () {
-              this.style.filter = "none"
-              this.style.transform = "scale(1) rotate(0deg)"
-            })
-
-            // Touch events
-            shinchan.addEventListener("touchstart", function (e) {
-              e.preventDefault()
-              this.style.transform = "scale(0.9)"
-            })
-
-            shinchan.addEventListener("touchend", function (e) {
-              e.preventDefault()
-              this.style.transform = "scale(1.1)"
-              setTimeout(() => {
-                this.style.transform = "none"
-              }, 300)
-            })
-          }
         }, 5000)
       })
     }
