@@ -516,6 +516,9 @@ export default function BirthdayWish() {
     // Create individual explosion particles
     function createExplosionParticle(parent: HTMLElement) {
       if (!parent) return // Safety check
+
+      const isMobile = window.innerWidth <= 768;
+      
       const particle = document.createElement("div")
       particle.classList.add("firework-particle")
 
