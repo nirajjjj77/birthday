@@ -59,7 +59,7 @@ export default function BirthdayWish() {
       const cellHeight = window.innerHeight / gridRows
 
       // Create grid positions array with slight randomization
-      const gridPositions = []
+      const gridPositions: { x: number; y: number }[] = []
       for (let row = 0; row < gridRows; row++) {
         for (let col = 0; col < gridCols; col++) {
           gridPositions.push({
