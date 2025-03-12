@@ -728,7 +728,7 @@ export default function BirthdayWish() {
       }
       
       // Create visual effect when emoji is clicked
-      function createClickSpark(x, y) {
+      function createClickSpark(x: number, y: number) {
         const sparkContainer = document.createElement('div');
         sparkContainer.style.position = 'absolute';
         sparkContainer.style.left = `${x}px`;
