@@ -3,6 +3,8 @@
 import { useEffect } from "react"
 import React from "react"
 import { useState, useRef } from "react"
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 export default function BirthdayWish() {
   // Add a state variable to track score
@@ -375,6 +377,49 @@ export default function BirthdayWish() {
       }, 7000)
     }
 
+    function create3DBirthdayCard() {
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ alpha: true });
+  
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+  
+      // Load 3D card model (replace with your own model)
+      const loader = new GLTFLoader();
+      loader.load('/models/birthday_card.glb', (gltf) => {
+          const card = gltf.scene;
+          card.position.set(0, -1, 0);
+          scene.add(card);
+  
+          function animate() {
+              requestAnimationFrame(animate);
+              card.rotation.y += 0.01;
+              renderer.render(scene, camera);
+          }
+          animate();
+      });
+  
+      camera.position.z = 3;
+    }
+
+    function launchConfetti() {
+      const confettiCount = 200;
+      for (let i = 0; i < confettiCount; i++) {
+          const confetti = document.createElement("div");
+          confetti.classList.add("confetti");
+          document.body.appendChild(confetti);
+  
+          confetti.style.left = `${Math.random() * window.innerWidth}px`;
+          confetti.style.animation = `confetti-fall ${Math.random() * 2 + 3}s linear infinite`;
+  
+          setTimeout(() => {
+              confetti.remove();
+          }, 5000);
+      }
+    }
+  
+  
     // New function to create and launch rockets
     function launchRocket(container: HTMLElement) {
       if (!container) return // Safety check
@@ -854,6 +899,12 @@ export default function BirthdayWish() {
       
       // Create fireworks to celebrate
       createFireworks();
+
+      congratsMessage.addEventListener("click", () => {
+        document.body.innerHTML = ''; // Clear screen
+        create3DBirthdayCard(); // Show 3D Card
+        launchConfetti(); // Show confetti
+    });
       
       // Show message
       setTimeout(() => {

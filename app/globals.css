@@ -299,6 +299,21 @@ body {
   }
 }
 
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: hsl(calc(360 * var(--random)), 100%, 70%);
+  opacity: 0.8;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(-100vh) rotate(0deg); }
+  100% { transform: translateY(100vh) rotate(720deg); }
+}
+
+
 .loading {
   position: fixed;
   top: 0;
