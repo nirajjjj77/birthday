@@ -47,13 +47,15 @@ export default function BirthdayWish() {
 
       // Determine device capacity and adjust particle count
       // Reduce particles for mobile/low-powered devices
-      const isMobile = window.innerWidth <= 768
-      const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024
+      const isMobile = window.innerWidth <= 768;
+      const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
+      const isLowPower = navigator.hardwareConcurrency ? navigator.hardwareConcurrency < 4 : isMobile;
 
       // Adjust particle count based on device
-      let totalParticles = 60 // Default
-      if (isMobile) totalParticles = 40
-      else if (isTablet) totalParticles = 50
+      let totalParticles = 60; // Default
+      if (isMobile) totalParticles = 30;
+      else if (isTablet) totalParticles = 45;
+      if (isLowPower) totalParticles = Math.floor(totalParticles * 0.7);
 
       const numberOfCircles = Math.floor(totalParticles / 2)
       const numberOfStars = Math.floor(totalParticles / 2)
@@ -381,6 +383,16 @@ export default function BirthdayWish() {
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
       const renderer = new THREE.WebGLRenderer({ alpha: true });
+
+      // Add responsive handling for renderer
+      const updateSize = () => {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+      };
+  
+      window.addEventListener('resize', updateSize);
+      updateSize();
   
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);

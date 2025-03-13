@@ -67,11 +67,11 @@ body {
   transform: translateY(20px);
   transition: all 0.5s ease;
   background: linear-gradient(135deg, #ff6b99 0%, #ff96b8 100%);
-  padding: 5vh 8vw;
-  width: 90%;
+  padding: min(5vh, 30px) min(8vw, 40px);
+  width: min(90%, 600px);
   max-width: 600px;
   border-radius: 20px;
-  font-size: 1.8rem;
+  font-size: clamp(1.2rem, 4vw, 1.8rem);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -139,9 +139,20 @@ body {
   pointer-events: auto;
 }
 
+.secondary-messages {
+  position: relative;
+  height: auto;
+  min-height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .message-box.second-box {
   position: absolute;
   left: 50%;
+  top: 0;
   transform: translateX(-50%) translateY(20px);
   opacity: 0;
   transition: all 0.5s ease;
@@ -208,8 +219,8 @@ body {
 
 .firework-particle {
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: min(5px, 1vw);
+  height: min(5px, 1vw);
   border-radius: 50%;
   will-change: transform, opacity;
   filter: brightness(1.2);
@@ -249,15 +260,32 @@ body {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 380px) {
   .message-box {
-    font-size: 1.4rem;
-    padding: 4vh 6vw;
-    width: 85%;
+    font-size: 1.2rem;
+    padding: 3vh 5vw;
+    width: 90%;
+  }
+
+  .bokeh, .star {
+    /* Reduce particles for very small screens */
+    transform: scale(0.8);
+  }
+}
+
+/* Portrait orientation adjustments */
+@media (orientation: portrait) and (max-height: 700px) {
+  .message-box {
+    padding: 2vh 5vw;
+  }
+  
+  .messages-container {
+    gap: 10px;
   }
 }
 
 .cake-emoji {
+  font-size: clamp(2rem, 5vw, 3rem);
   opacity: 1;
   transition: opacity 0.3s ease, transform 0.3s ease;
   cursor: pointer;
@@ -285,6 +313,8 @@ body {
 }
 
 .score-display {
+  font-size: clamp(0.9rem, 3vw, 1.2rem);
+  padding: min(10px, 2vw) min(20px, 4vw);
   animation: fade-in 0.5s ease forwards;
 }
 
