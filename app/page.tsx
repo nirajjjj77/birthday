@@ -388,9 +388,6 @@ export default function BirthdayWish() {
       // Create the card with front and inside
       const card = document.createElement('div');
       card.className = 'birthday-card';
-
-      // Add this near the beginning of your function to ensure the body style is applied
-      document.body.style.background = "linear-gradient(135deg, #9932cc 0%, #b85ee6 50%, #d896ff 100%)";
       
       // Create card front
       const cardFront = document.createElement('div');
@@ -430,16 +427,6 @@ export default function BirthdayWish() {
       card.appendChild(cardInside);
       cardContainer.appendChild(card);
       document.body.appendChild(cardContainer);
-
-      const birthdayWish = document.querySelector('.birthday-wish');
-      if (birthdayWish) {
-        // Use a properly formatted message with spaces
-        const text = "May all your wishes come true! Wishing you a day filled with happiness and a year filled with joy.";
-        birthdayWish.innerHTML = '';
-        
-        // Just add the text as is without animation properties
-        birthdayWish.textContent = text;
-      }
       
       // Add card flip functionality
       card.addEventListener('click', () => {
@@ -773,10 +760,6 @@ export default function BirthdayWish() {
       `;
       
       document.head.appendChild(style);
-
-      // Add at the end of your function
-      console.log("Birthday card created. If styles aren't visible, check if the style element was properly added to the head.");
-      console.log("Applied styles:", style.textContent);
     }
 
     function launchConfetti() {
