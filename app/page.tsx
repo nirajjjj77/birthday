@@ -487,17 +487,12 @@ export default function BirthdayWish() {
 
       const birthdayWish = document.querySelector('.birthday-wish');
       if (birthdayWish) {
-        // Wrap each letter in a span for animation
+        // Use a properly formatted message with spaces
         const text = "May all your wishes come true! Wishing you a day filled with happiness and a year filled with joy.";
-         birthdayWish.innerHTML = '';
-  
-        text.split('').forEach((char, index) => {
-          const charSpan = document.createElement('span');
-          charSpan.textContent = char;
-          charSpan.style.animationDelay = `${0.05 * index}s`;
-          charSpan.className = 'animated-char';
-          birthdayWish.appendChild(charSpan);
-        });
+        birthdayWish.innerHTML = '';
+        
+        // Just add the text as is without animation properties
+        birthdayWish.textContent = text;
       }
       
       // Add card flip functionality
@@ -570,10 +565,11 @@ export default function BirthdayWish() {
         }
         
         .card-front {
-          background: linear-gradient(145deg, #ff96b8, #ff6b99);
+          background: linear-gradient(145deg, #ff96b8, #ff3366);
           color: white;
           text-align: center;
           padding: 20px;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .card-inside {
@@ -595,8 +591,8 @@ export default function BirthdayWish() {
           right: 0;
           bottom: 0;
           background-image: radial-gradient(circle at 10% 20%, rgba(255, 182, 193, 0.2) 10%, transparent 20%),
-                            radial-gradient(circle at 70% 65%, rgba(173, 216, 230, 0.2) 15%, transparent 25%),
-                            radial-gradient(circle at 40% 50%, rgba(255, 223, 186, 0.2) 20%, transparent 30%);
+          radial-gradient(circle at 70% 65%, rgba(173, 216, 230, 0.2) 15%, transparent 25%),
+          radial-gradient(circle at 40% 50%, rgba(255, 223, 186, 0.2) 20%, transparent 30%);
           animation: shimmer 8s infinite linear;
           z-index: 0;
         }
@@ -831,24 +827,10 @@ export default function BirthdayWish() {
           overflow: hidden;
           box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
         }
-
-        .animated-char {
-            display: inline-block;
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-  
-        .inside-text:hover .animated-char {
-          animation: bounce-text 1s ease infinite;
-        }
-  
-        @keyframes bounce-text {
-          0%, 100% { transform: translateY(0); color: inherit; }
-          50% { transform: translateY(-5px); color: #ff6b99; }
-        }
       `;
       
       document.head.appendChild(style);
-      
+
       // Add at the end of your function
       console.log("Birthday card created. If styles aren't visible, check if the style element was properly added to the head.");
       console.log("Applied styles:", style.textContent);
