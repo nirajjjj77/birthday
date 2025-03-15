@@ -424,60 +424,6 @@ export default function BirthdayWish() {
           <div class="balloon balloon-3"></div>
         </div>
       `;
-
-      // Add this after creating the cardInside element
-      // Create floating decorative elements
-      const decorCount = 12;
-      for (let i = 0; i < decorCount; i++) {
-        const decor = document.createElement('div');
-        decor.className = 'card-decor';
-  
-        // Randomly choose decoration type
-        const decorType = Math.floor(Math.random() * 3);
-        if (decorType === 0) {
-          decor.textContent = '✨';
-        } else if (decorType === 1) {
-          decor.textContent = '🎉';
-        } else {
-          decor.textContent = '🎊';
-        }
-  
-        // Random position and animation delay
-        decor.style.left = `${Math.random() * 100}%`;
-        decor.style.top = `${Math.random() * 100}%`;
-        decor.style.animationDelay = `${Math.random() * 5}s`;
-  
-        cardInside.appendChild(decor);
-      }
-
-      // Add this CSS for the decorative elements
-      const additionalStyles = `
-        .card-decor {
-          position: absolute;
-          font-size: 1.5rem;
-          opacity: 0;
-          pointer-events: none;
-          z-index: 1;
-          animation: float-and-fade 8s ease-in-out infinite;
-        }
-  
-        @keyframes float-and-fade {
-          0% { 
-            transform: translateY(20px) scale(0.5); 
-            opacity: 0; 
-          }
-          20% { 
-            opacity: 0.7; 
-          }
-          80% { 
-            opacity: 0.7; 
-          }
-          100% { 
-            transform: translateY(-40px) scale(1.2); 
-            opacity: 0; 
-          }
-        }
-      `;
       
       // Add elements to DOM
       card.appendChild(cardFront);
@@ -787,9 +733,6 @@ export default function BirthdayWish() {
           }
         }
       `;
-
-      // Append this to your existing style content
-      style.textContent += additionalStyles;
 
       style.textContent += `
        .inside-text h2 {
