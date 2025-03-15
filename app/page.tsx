@@ -388,6 +388,9 @@ export default function BirthdayWish() {
       // Create the card with front and inside
       const card = document.createElement('div');
       card.className = 'birthday-card';
+
+      // Add this near the beginning of your function to ensure the body style is applied
+      document.body.style.background = "linear-gradient(135deg, #9932cc 0%, #b85ee6 50%, #d896ff 100%)";
       
       // Create card front
       const cardFront = document.createElement('div');
@@ -485,7 +488,7 @@ export default function BirthdayWish() {
       const birthdayWish = document.querySelector('.birthday-wish');
       if (birthdayWish) {
         // Wrap each letter in a span for animation
-        const text = birthdayWish.textContent || '';
+        const text = "May all your wishes come true! Wishing you a day filled with happiness and a year filled with joy.";
          birthdayWish.innerHTML = '';
   
         text.split('').forEach((char, index) => {
@@ -719,19 +722,19 @@ export default function BirthdayWish() {
         }
         
         .balloon-1 {
-          background: #ff6b99;
+          background: #ff3366;
           left: 20%;
           animation-delay: 0.2s;
         }
         
         .balloon-2 {
-          background: #9932cc;
+          background: #7b2cff;
           left: 50%;
           animation-delay: 0.4s;
         }
         
         .balloon-3 {
-          background: #aff9c9;
+          background: #4dff88;
           right: 20%;
           animation-delay: 0.6s;
         }
@@ -793,9 +796,45 @@ export default function BirthdayWish() {
       style.textContent += additionalStyles;
 
       style.textContent += `
+       .inside-text h2 {
+          font-family: 'Brush Script MT', cursive, sans-serif;
+          font-size: 32px;
+          color: #ff6b99;
+          margin-bottom: 15px;
+        }
+  
+        .birthday-wish {
+          font-family: 'Arial', sans-serif;
+          font-weight: 500;
+          font-size: 18px;
+          color: #333;
+          line-height: 1.8;
+          letter-spacing: 0.5px;
+          word-spacing: 2px;
+        }
+  
+        .birthday-signature {
+          font-family: 'Brush Script MT', cursive, sans-serif;
+          font-size: 24px;
+          color: #9932cc;
+          margin-top: 40px;
+        }
+      
+        .card-inside {
+          background: linear-gradient(135deg, #f9f9ff 0%, #f0f8ff 100%);
+          transform: rotateY(180deg);
+          padding: 30px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          position: relative;
+          overflow: hidden;
+          box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+        }
+
         .animated-char {
-          display: inline-block;
-          transition: transform 0.2s ease, color 0.2s ease;
+            display: inline-block;
+            transition: transform 0.2s ease, color 0.2s ease;
         }
   
         .inside-text:hover .animated-char {
@@ -809,6 +848,10 @@ export default function BirthdayWish() {
       `;
       
       document.head.appendChild(style);
+      
+      // Add at the end of your function
+      console.log("Birthday card created. If styles aren't visible, check if the style element was properly added to the head.");
+      console.log("Applied styles:", style.textContent);
     }
 
     function launchConfetti() {
