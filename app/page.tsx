@@ -421,12 +421,81 @@ export default function BirthdayWish() {
           <div class="balloon balloon-3"></div>
         </div>
       `;
+
+      // Add this after creating the cardInside element
+      // Create floating decorative elements
+      const decorCount = 12;
+      for (let i = 0; i < decorCount; i++) {
+        const decor = document.createElement('div');
+        decor.className = 'card-decor';
+  
+        // Randomly choose decoration type
+        const decorType = Math.floor(Math.random() * 3);
+        if (decorType === 0) {
+          decor.textContent = '✨';
+        } else if (decorType === 1) {
+          decor.textContent = '🎉';
+        } else {
+          decor.textContent = '🎊';
+        }
+  
+        // Random position and animation delay
+        decor.style.left = `${Math.random() * 100}%`;
+        decor.style.top = `${Math.random() * 100}%`;
+        decor.style.animationDelay = `${Math.random() * 5}s`;
+  
+        cardInside.appendChild(decor);
+      }
+
+      // Add this CSS for the decorative elements
+      const additionalStyles = `
+        .card-decor {
+          position: absolute;
+          font-size: 1.5rem;
+          opacity: 0;
+          pointer-events: none;
+          z-index: 1;
+          animation: float-and-fade 8s ease-in-out infinite;
+        }
+  
+        @keyframes float-and-fade {
+          0% { 
+            transform: translateY(20px) scale(0.5); 
+            opacity: 0; 
+          }
+          20% { 
+            opacity: 0.7; 
+          }
+          80% { 
+            opacity: 0.7; 
+          }
+          100% { 
+            transform: translateY(-40px) scale(1.2); 
+            opacity: 0; 
+          }
+        }
+      `;
       
       // Add elements to DOM
       card.appendChild(cardFront);
       card.appendChild(cardInside);
       cardContainer.appendChild(card);
       document.body.appendChild(cardContainer);
+
+      const birthdayWish = document.querySelector('.birthday-wish');
+      if (birthdayWish) {
+        // Wrap each letter in a span for animation
+        const text = birthdayWish.textContent || '';
+         birthdayWish.innerHTML = '';
+  
+        text.split('').forEach((char, index) => {
+          const charSpan = document.createElement('span');
+          charSpan.textContent = char;
+          charSpan.style.animationDelay = `${0.05 * index}s`;
+          charSpan.className = 'animated-char';
+          birthdayWish.appendChild(charSpan);
+        });
+      }
       
       // Add card flip functionality
       card.addEventListener('click', () => {
@@ -505,15 +574,37 @@ export default function BirthdayWish() {
         }
         
         .card-inside {
-          background: white;
+          background: linear-gradient(135deg, #f9f9ff 0%, #f0f8ff 100%);
           transform: rotateY(180deg);
           padding: 30px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .card-inside::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: radial-gradient(circle at 10% 20%, rgba(255, 182, 193, 0.2) 10%, transparent 20%),
+                            radial-gradient(circle at 70% 65%, rgba(173, 216, 230, 0.2) 15%, transparent 25%),
+                            radial-gradient(circle at 40% 50%, rgba(255, 223, 186, 0.2) 20%, transparent 30%);
+          animation: shimmer 8s infinite linear;
+          z-index: 0;
+        }
+
+        @keyframes shimmer {
+          0% { background-position: 0% 0%, 0% 0%, 0% 0%; }
+          100% { background-position: 100% 100%, 100% 100%, 100% 100%; }
         }
         
         .inside-text {
+          position: relative;
           text-align: center;
           color: #333;
           z-index: 2;
@@ -695,6 +786,25 @@ export default function BirthdayWish() {
           .birthday-wish {
             font-size: 16px;
           }
+        }
+      `;
+
+      // Append this to your existing style content
+      style.textContent += additionalStyles;
+
+      style.textContent += `
+        .animated-char {
+          display: inline-block;
+          transition: transform 0.2s ease, color 0.2s ease;
+        }
+  
+        .inside-text:hover .animated-char {
+          animation: bounce-text 1s ease infinite;
+        }
+  
+        @keyframes bounce-text {
+          0%, 100% { transform: translateY(0); color: inherit; }
+          50% { transform: translateY(-5px); color: #ff6b99; }
         }
       `;
       
