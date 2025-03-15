@@ -3,8 +3,6 @@
 import { useEffect } from "react"
 import React from "react"
 import { useState, useRef } from "react"
-import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 export default function BirthdayWish() {
   // Add a state variable to track score
@@ -379,40 +377,328 @@ export default function BirthdayWish() {
       }, 7000)
     }
 
-    function create3DBirthdayCard() {
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ alpha: true });
-
-      // Add responsive handling for renderer
-      const updateSize = () => {
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-      };
-  
-      window.addEventListener('resize', updateSize);
-      updateSize();
-  
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.body.appendChild(renderer.domElement);
-  
-      // Load 3D card model (replace with your own model)
-      const loader = new GLTFLoader();
-      loader.load('/models/birthday_card.glb', (gltf) => {
-          const card = gltf.scene;
-          card.position.set(0, -1, 0);
-          scene.add(card);
-  
-          function animate() {
-              requestAnimationFrame(animate);
-              card.rotation.y += 0.01;
-              renderer.render(scene, camera);
-          }
-          animate();
+    function createInteractiveBirthdayCard() {
+      // Clear the body first
+      document.body.innerHTML = '';
+      
+      // Create card container
+      const cardContainer = document.createElement('div');
+      cardContainer.className = 'birthday-card-container';
+      
+      // Create the card with front and inside
+      const card = document.createElement('div');
+      card.className = 'birthday-card';
+      
+      // Create card front
+      const cardFront = document.createElement('div');
+      cardFront.className = 'card-front';
+      cardFront.innerHTML = `
+        <div class="ribbon"></div>
+        <div class="cake">
+          <div class="cake-base"></div>
+          <div class="cake-middle"></div>
+          <div class="cake-top"></div>
+          <div class="candle">
+            <div class="flame"></div>
+          </div>
+        </div>
+        <h2>Happy Birthday!</h2>
+        <p>Click to open</p>
+      `;
+      
+      // Create card inside
+      const cardInside = document.createElement('div');
+      cardInside.className = 'card-inside';
+      cardInside.innerHTML = `
+        <div class="inside-text">
+          <h2>Happy Birthday!</h2>
+          <p class="birthday-wish">May all your wishes come true! Wishing you a day filled with happiness and a year filled with joy.</p>
+          <p class="birthday-signature">With love,<br>From Me</p>
+        </div>
+        <div class="balloons">
+          <div class="balloon balloon-1"></div>
+          <div class="balloon balloon-2"></div>
+          <div class="balloon balloon-3"></div>
+        </div>
+      `;
+      
+      // Add elements to DOM
+      card.appendChild(cardFront);
+      card.appendChild(cardInside);
+      cardContainer.appendChild(card);
+      document.body.appendChild(cardContainer);
+      
+      // Add card flip functionality
+      card.addEventListener('click', () => {
+        card.classList.toggle('flipped');
+        
+        // Add balloons animation when card is opened
+        if (card.classList.contains('flipped')) {
+          setTimeout(() => {
+            const balloons = document.querySelectorAll('.balloon');
+            balloons.forEach((balloon, index) => {
+              setTimeout(() => {
+                balloon.classList.add('float');
+              }, index * 300);
+            });
+          }, 500);
+        }
       });
-  
-      camera.position.z = 3;
+      
+      // Add CSS for the birthday card
+      const style = document.createElement('style');
+      style.textContent = `
+        body {
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          background: linear-gradient(135deg, #9932cc 0%, #b85ee6 50%, #d896ff 100%);
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          overflow: hidden;
+        }
+        
+        .birthday-card-container {
+          width: 100%;
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          perspective: 1200px;
+        }
+        
+        .birthday-card {
+          width: 90%;
+          max-width: 400px;
+          height: 500px;
+          position: relative;
+          transform-style: preserve-3d;
+          transition: transform 1s ease;
+          cursor: pointer;
+        }
+        
+        .birthday-card.flipped {
+          transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-inside {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          backface-visibility: hidden;
+          border-radius: 15px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+          overflow: hidden;
+        }
+        
+        .card-front {
+          background: linear-gradient(145deg, #ff96b8, #ff6b99);
+          color: white;
+          text-align: center;
+          padding: 20px;
+        }
+        
+        .card-inside {
+          background: white;
+          transform: rotateY(180deg);
+          padding: 30px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        
+        .inside-text {
+          text-align: center;
+          color: #333;
+          z-index: 2;
+        }
+        
+        .birthday-wish {
+          margin: 30px 0;
+          line-height: 1.6;
+          font-size: 18px;
+        }
+        
+        .birthday-signature {
+          font-style: italic;
+          margin-top: 40px;
+          align-self: flex-end;
+        }
+        
+        /* Cake styles */
+        .cake {
+          position: relative;
+          width: 120px;
+          height: 120px;
+          margin-bottom: 30px;
+        }
+        
+        .cake-base {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 40px;
+          background: #f9d2af;
+          border-radius: 10px;
+        }
+        
+        .cake-middle {
+          position: absolute;
+          bottom: 40px;
+          width: 90%;
+          height: 35px;
+          left: 5%;
+          background: #f9afd0;
+          border-radius: 8px;
+        }
+        
+        .cake-top {
+          position: absolute;
+          bottom: 75px;
+          width: 80%;
+          height: 30px;
+          left: 10%;
+          background: #aff9c9;
+          border-radius: 6px;
+        }
+        
+        .candle {
+          position: absolute;
+          bottom: 105px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 8px;
+          height: 25px;
+          background: #fdfd96;
+          border-radius: 4px;
+        }
+        
+        .flame {
+          position: absolute;
+          top: -15px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 10px;
+          height: 15px;
+          background: #ff9d00;
+          border-radius: 50% 50% 20% 20%;
+          box-shadow: 0 0 10px #ff9d00, 0 0 20px #ff9d00;
+          animation: flicker 0.6s infinite alternate;
+        }
+        
+        /* Ribbon */
+        .ribbon {
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          width: 80px;
+          height: 80px;
+          background: #ff3366;
+          transform: rotate(45deg);
+        }
+        
+        /* Balloons */
+        .balloons {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+        }
+        
+        .balloon {
+          position: absolute;
+          width: 60px;
+          height: 70px;
+          border-radius: 50%;
+          bottom: -80px;
+          opacity: 0;
+          transition: transform 3s ease, opacity 0.5s ease;
+        }
+        
+        .balloon.float {
+          opacity: 1;
+          animation: floating 8s ease-in-out infinite;
+        }
+        
+        .balloon-1 {
+          background: #ff6b99;
+          left: 20%;
+          animation-delay: 0.2s;
+        }
+        
+        .balloon-2 {
+          background: #9932cc;
+          left: 50%;
+          animation-delay: 0.4s;
+        }
+        
+        .balloon-3 {
+          background: #aff9c9;
+          right: 20%;
+          animation-delay: 0.6s;
+        }
+        
+        .balloon::before {
+          content: '';
+          position: absolute;
+          width: 10px;
+          height: 20px;
+          background: inherit;
+          bottom: -10px;
+          left: 50%;
+          transform: translateX(-50%) rotate(45deg);
+          border-bottom-left-radius: 20px;
+          border-bottom-right-radius: 20px;
+        }
+        
+        .balloon::after {
+          content: '';
+          position: absolute;
+          width: 2px;
+          height: 50px;
+          background: rgba(255,255,255,0.7);
+          bottom: -60px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        
+        /* Animations */
+        @keyframes flicker {
+          0% { transform: translateX(-50%) scale(1); }
+          100% { transform: translateX(-50%) scale(1.1); }
+        }
+        
+        @keyframes floating {
+          0%, 100% { transform: translateY(0) rotate(5deg); }
+          50% { transform: translateY(-150px) rotate(-5deg); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+          .birthday-card {
+            max-width: 300px;
+            height: 420px;
+          }
+          
+          .cake {
+            width: 100px;
+            height: 100px;
+          }
+          
+          .birthday-wish {
+            font-size: 16px;
+          }
+        }
+      `;
+      
+      document.head.appendChild(style);
     }
 
     function launchConfetti() {
@@ -913,8 +1199,7 @@ export default function BirthdayWish() {
       createFireworks();
 
       congratsMessage.addEventListener("click", () => {
-        document.body.innerHTML = ''; // Clear screen
-        create3DBirthdayCard(); // Show 3D Card
+        createInteractiveBirthdayCard(); // Show interactive card instead of 3D model
         launchConfetti(); // Show confetti
     });
       
