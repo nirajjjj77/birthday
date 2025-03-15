@@ -402,7 +402,7 @@ export default function BirthdayWish() {
             <div class="flame"></div>
           </div>
         </div>
-        <h2>Happy Birthday!</h2>
+        <h2>Happy 18th Birthday!</h2>
         <p>Click to open</p>
       `;
       
@@ -411,9 +411,10 @@ export default function BirthdayWish() {
       cardInside.className = 'card-inside';
       cardInside.innerHTML = `
         <div class="inside-text">
-          <h2>Happy Birthday!</h2>
-          <p class="birthday-wish">May all your wishes come true! Wishing you a day filled with happiness and a year filled with joy.</p>
-          <p class="birthday-signature">With love,<br>From Me</p>
+          <h2>Happy Birthday Motiii!</h2>
+          <p class="birthday-wish">Congratulations! You just turned up 18. Hope your previous eighteen years have been wonderful, and may the upcoming years be even more amazing and full of happiness.</p>
+          <p class="birthday-wish">Wishing you a day filled with happiness and a year filled with joy.<br>Enjoy your day....</p>
+          <p class="birthday-signature">Again Happy Birthday!</p>
         </div>
         <div class="balloons">
           <div class="balloon balloon-1"></div>
