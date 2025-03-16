@@ -728,13 +728,14 @@ export default function BirthdayWish() {
           font-size: 32px;
           color: #ff6b99;
           margin-bottom: 15px;
+          text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
   
         .birthday-wish {
-          font-family: 'Arial', sans-serif;
+          font-family: 'Comic Sans MS', 'Segoe Print', cursive, sans-serif;
           font-weight: 500;
           font-size: 18px;
-          color: #333;
+          color: #6a5acd;
           line-height: 1.8;
           letter-spacing: 0.5px;
           word-spacing: 2px;
@@ -745,6 +746,7 @@ export default function BirthdayWish() {
           font-size: 24px;
           color: #9932cc;
           margin-top: 40px;
+          text-shadow: 1px 1px 3px rgba(153, 50, 204, 0.2);
         }
       
         .card-inside {
