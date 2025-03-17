@@ -1,13 +1,87 @@
 "use client"
 
-import { useEffect } from "react"
-import React from "react"
-import { useState, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react";
 
 export default function BirthdayWish() {
   // Add a state variable to track score
   const [score, setScore] = useState(0);
   const gameActiveRef = useRef(false);
+  // Add this new audio ref
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Add this new function to create a floating music button
+  function createMusicButton() {
+    const musicButton = document.createElement('button');
+    musicButton.innerHTML = '🎵 Play Music';
+    musicButton.className = 'music-button';
+    
+    // Style the button
+    musicButton.style.position = 'fixed';
+    musicButton.style.bottom = '20px';
+    musicButton.style.right = '20px';
+    musicButton.style.zIndex = '1000';
+    musicButton.style.background = 'rgba(255, 82, 168, 0.9)';
+    musicButton.style.color = 'white';
+    musicButton.style.border = 'none';
+    musicButton.style.borderRadius = '30px';
+    musicButton.style.padding = '12px 20px';
+    musicButton.style.fontSize = '16px';
+    musicButton.style.fontWeight = 'bold';
+    musicButton.style.cursor = 'pointer';
+    musicButton.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+    musicButton.style.transition = 'all 0.3s ease';
+    
+    // Add hover effect
+    musicButton.onmouseenter = () => {
+      musicButton.style.transform = 'scale(1.05)';
+      musicButton.style.boxShadow = '0 6px 16px rgba(0,0,0,0.4)';
+    };
+    
+    musicButton.onmouseleave = () => {
+      musicButton.style.transform = 'scale(1)';
+      musicButton.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+    };
+    
+    // Play audio when clicked
+    musicButton.addEventListener('click', () => {
+      if (audioRef.current) {
+        audioRef.current.play()
+          .then(() => {
+            // Once playing, change button to a volume control
+            musicButton.innerHTML = '🔊';
+            musicButton.style.width = '50px';
+            musicButton.style.height = '50px';
+            musicButton.style.borderRadius = '50%';
+            musicButton.style.display = 'flex';
+            musicButton.style.alignItems = 'center';
+            musicButton.style.justifyContent = 'center';
+            musicButton.style.padding = '0';
+            
+            // Toggle mute when clicked after music starts
+            let isMuted = false;
+            musicButton.addEventListener('click', () => {
+              if (audioRef.current) {
+                if (!isMuted) {
+                  audioRef.current.volume = 0;
+                  musicButton.innerHTML = '🔇';
+                  isMuted = true;
+                } else {
+                  audioRef.current.volume = 0.7;
+                  musicButton.innerHTML = '🔊';
+                  isMuted = false;
+                }
+              }
+            });
+          })
+          .catch(err => {
+            console.error("Failed to play audio:", err);
+            musicButton.innerHTML = '❌ Error';
+          });
+      }
+    });
+    
+    document.body.appendChild(musicButton);
+  }
 
   useEffect(() => {
     const appHeight = () => {
@@ -16,6 +90,34 @@ export default function BirthdayWish() {
     }
     window.addEventListener('resize', appHeight)
     appHeight()
+
+    // Try to load from your public folder, fallback to an external source
+    const audioSrc = "/birthday-song.mp3"; // Public folder path
+    const fallbackSrc = "https://raw.githubusercontent.com/nirajjjj77/birthday/main/birthday-song.mp3"; // External backup URL
+
+    const audio = new Audio(audioSrc);
+    audio.loop = true; // Set to loop continuously
+    audio.volume = 0.7; // Set volume to 70%
+
+    // Handle error and switch to fallback source
+    audio.onerror = () => {
+      console.log("Failed to load audio from project, trying fallback");
+      audio.src = fallbackSrc;
+    };
+
+    audioRef.current = audio;
+     
+    // Try to play (may be blocked by browser)
+    const playPromise = audio.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.catch(error => {
+        console.log("Autoplay prevented:", error);
+        // Create a music button user can click to start music
+        createMusicButton();
+      });
+    }
+
     // Create a star shape SVG - performance optimized
     function createStarSVG(size: number, color: string, opacity: number) {
       const points: string[] = []
@@ -378,6 +480,16 @@ export default function BirthdayWish() {
     }
 
     function createInteractiveBirthdayCard() {
+      // Try to ensure music is playing when transitioning to the card
+      if (audioRef.current) {
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log("Audio play prevented during card transition:", error);
+          });
+        }
+      }
+
       // Clear the body first
       document.body.innerHTML = '';
       
@@ -1397,6 +1509,15 @@ export default function BirthdayWish() {
     } else {
       window.addEventListener("load", init)
     }
+
+    // Add cleanup function
+    return () => {
+      window.removeEventListener('resize', appHeight);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = "";
+      }
+    };
   }, [])
 
   return (
