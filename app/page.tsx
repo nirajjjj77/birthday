@@ -93,7 +93,7 @@ export default function BirthdayWish() {
 
     // Try to load from your public folder, fallback to an external source
     const audioSrc = "/birthday-song.mp3"; // Public folder path
-    const fallbackSrc = "https://raw.githubusercontent.com/nirajjjj77/birthday/main/birthday-song.mp3"; // External backup URL
+    const fallbackSrc = "https://raw.githubusercontent.com/nirajjjj77/birthday/main/audio/birthday-song.mp3"; // External backup URL
 
     const audio = new Audio(audioSrc);
     audio.loop = true; // Set to loop continuously
