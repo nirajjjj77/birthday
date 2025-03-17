@@ -92,8 +92,6 @@ export default function BirthdayWish() {
     if (playPromise !== undefined) {
       playPromise.catch(error => {
         console.log("Autoplay prevented:", error);
-        // Create a music button user can click to start music
-        createMusicButton();
       });
     }
 
@@ -505,7 +503,7 @@ export default function BirthdayWish() {
           <h2>Happy Birthday Motiii!</h2>
           <p class="birthday-wish">Congratulations! You just turned up 18. Hope your previous eighteen years have been wonderful, and may the upcoming years be even more amazing and full of happiness.</p>
           <p class="birthday-wish">Wishing you a day filled with happiness and a year filled with joy.<br>Enjoy your day....</p>
-          <p class="birthday-signature">Again Happy Birthday!</p>
+          <p class="birthday-signature">Again, Happy Birthday!</p>
         </div>
         <div class="balloons">
           <div class="balloon balloon-1"></div>
@@ -519,6 +517,9 @@ export default function BirthdayWish() {
       card.appendChild(cardInside);
       cardContainer.appendChild(card);
       document.body.appendChild(cardContainer);
+
+      // Create a music button user can click to start music
+      createMusicButton();
       
       // Add card flip functionality
       card.addEventListener('click', () => {
