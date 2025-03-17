@@ -12,9 +12,15 @@ export default function BirthdayWish() {
   // Add this new function to create a floating music button
   function createMusicButton() {
     const musicButton = document.createElement('button');
-    let isPlaying = false; // Track play state
-
-    musicButton.innerHTML = '🎵 Play Music';
+    let isPlaying = false; // Initial state
+    
+    // Check if audio is already playing
+    if (audioRef.current) {
+      isPlaying = !audioRef.current.paused;
+    }
+    
+    // Set initial button text based on playback state
+    musicButton.innerHTML = isPlaying ? "⏸ Pause" : "🎵 Play Music";
     musicButton.className = 'music-button';
     
     // Style the button
