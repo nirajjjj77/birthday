@@ -12,6 +12,8 @@ export default function BirthdayWish() {
   // Add this new function to create a floating music button
   function createMusicButton() {
     const musicButton = document.createElement('button');
+    let isPlaying = false; // Track play state
+
     musicButton.innerHTML = '🎵 Play Music';
     musicButton.className = 'music-button';
     
@@ -41,42 +43,19 @@ export default function BirthdayWish() {
       musicButton.style.transform = 'scale(1)';
       musicButton.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
     };
-    
-    // Play audio when clicked
-    musicButton.addEventListener('click', () => {
+
+    musicButton.addEventListener("click", () => {
       if (audioRef.current) {
-        audioRef.current.play()
-          .then(() => {
-            // Once playing, change button to a volume control
-            musicButton.innerHTML = '🔊';
-            musicButton.style.width = '50px';
-            musicButton.style.height = '50px';
-            musicButton.style.borderRadius = '50%';
-            musicButton.style.display = 'flex';
-            musicButton.style.alignItems = 'center';
-            musicButton.style.justifyContent = 'center';
-            musicButton.style.padding = '0';
-            
-            // Toggle mute when clicked after music starts
-            let isMuted = false;
-            musicButton.addEventListener('click', () => {
-              if (audioRef.current) {
-                if (!isMuted) {
-                  audioRef.current.volume = 0;
-                  musicButton.innerHTML = '🔇';
-                  isMuted = true;
-                } else {
-                  audioRef.current.volume = 0.7;
-                  musicButton.innerHTML = '🔊';
-                  isMuted = false;
-                }
-              }
-            });
-          })
-          .catch(err => {
+        if (isPlaying) {
+          audioRef.current.pause(); // Pause music
+          musicButton.innerHTML = "▶️ Play";
+        } else {
+          audioRef.current.play().catch((err) => {
             console.error("Failed to play audio:", err);
-            musicButton.innerHTML = '❌ Error';
           });
+          musicButton.innerHTML = "⏸ Pause";
+        }
+        isPlaying = !isPlaying; // Toggle play state
       }
     });
     
