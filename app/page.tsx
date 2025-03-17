@@ -566,12 +566,15 @@ export default function BirthdayWish() {
           justify-content: center;
           align-items: center;
           perspective: 1200px;
+          padding: 20px;
+          box-sizing: border-box;
         }
         
         .birthday-card {
           width: 90%;
           max-width: 400px;
-          height: 500px;
+          min-height: 500px;
+          height: auto;
           position: relative;
           transform-style: preserve-3d;
           transition: transform 1s ease;
@@ -612,7 +615,8 @@ export default function BirthdayWish() {
           flex-direction: column;
           justify-content: space-between;
           position: relative;
-          overflow: hidden;
+          overflow: auto;
+          max-height: 90vh;
         }
 
         .card-inside::before {
@@ -806,7 +810,8 @@ export default function BirthdayWish() {
         @media (max-width: 480px) {
           .birthday-card {
             max-width: 300px;
-            height: 420px;
+            min-height: 420px;
+            height: auto;
           }
           
           .cake {
@@ -816,6 +821,31 @@ export default function BirthdayWish() {
           
           .birthday-wish {
             font-size: 16px;
+            margin: 15px 0;
+          }
+
+          .inside-text h2 {
+            font-size: 28px;
+          }
+  
+          .birthday-signature {
+            margin-top: 20px;
+            font-size: 20px;
+          }
+  
+          .card-inside {
+            padding: 20px;
+          }
+        }
+
+        @media (max-height: 600px) {
+         .birthday-card {
+            min-height: 380px;
+          }
+  
+          .birthday-wish {
+            margin: 10px 0;
+            line-height: 1.4;
           }
         }
       `;
@@ -859,6 +889,14 @@ export default function BirthdayWish() {
           box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
         }
       `;
+
+      // Add this at the end of createInteractiveBirthdayCard function
+      const cardInsideElement = document.querySelector('.card-inside');
+      if (cardInsideElement) {
+        cardInsideElement.addEventListener('touchstart', function(e) {
+          e.stopPropagation(); // Prevent card flip when scrolling content
+        }, { passive: true });
+      }
       
       document.head.appendChild(style);
     }
