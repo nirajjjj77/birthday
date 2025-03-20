@@ -124,183 +124,350 @@ export default function BirthdayWish() {
     // Remove existing cake if any
     const existingCake = document.getElementById("cake-container");
     if (existingCake) return;
-
-    document.body.innerHTML = '';
   
+    document.body.innerHTML = '';
+    
     // Create Cake Container
     const cakeContainer = document.createElement("div");
     cakeContainer.id = "cake-container";
   
-    // Cake HTML Structure
+    // Cake HTML Structure - Enhanced design
     cakeContainer.innerHTML = `
-      <div class="cake">
-        <div class="layer layer-bottom"></div>
-        <div class="layer layer-middle"></div>
-        <div class="layer layer-top"></div>
-        <div class="icing"></div>
-        <div class="drips"></div>
-        <div class="plate"></div>
-        <div class="candles">
-          <div class="candle"><div class="flame"></div></div>
-          <div class="candle"><div class="flame"></div></div>
-          <div class="candle"><div class="flame"></div></div>
+      <div class="cake-scene">
+        <div class="cake">
+          <div class="cake-base"></div>
+          <div class="cake-frosting"></div>
+          <div class="cake-decoration"></div>
+          <div class="cake-topper">18</div>
+          <div class="candles">
+            <div class="candle candle-1"><div class="flame"></div></div>
+            <div class="candle candle-2"><div class="flame"></div></div>
+            <div class="candle candle-3"><div class="flame"></div></div>
+          </div>
         </div>
+        <div class="cake-plate"></div>
+        <div class="cake-shadow"></div>
+        <div class="knife">🔪</div>
+        <div class="continue-btn" id="cake-continue-btn">Continue to Card</div>
       </div>
-      <div class="knife">🔪</div>
     `;
-  
+    
     document.body.appendChild(cakeContainer);
   
-    // 🎂 Handle Cake Cutting
+    // Add music control button to cake page
+    const musicButton = document.createElement('button');
+    musicButton.id = "cake-music-button";
+    musicButton.className = 'music-button';
+    
+    // Check if audio is playing
+    let isPlaying = false;
+    if (audioRef.current) {
+      isPlaying = !audioRef.current.paused;
+    }
+    
+    musicButton.innerHTML = isPlaying ? "⏸ Pause Music" : "🎵 Play Music";
+    
+    // Style the button
+    musicButton.style.position = 'fixed';
+    musicButton.style.bottom = '20px';
+    musicButton.style.left = '20px';
+    musicButton.style.zIndex = '1000';
+    musicButton.style.background = 'rgba(255, 82, 168, 0.9)';
+    musicButton.style.color = 'white';
+    musicButton.style.border = 'none';
+    musicButton.style.borderRadius = '30px';
+    musicButton.style.padding = '12px 20px';
+    musicButton.style.fontSize = '16px';
+    musicButton.style.fontWeight = 'bold';
+    musicButton.style.cursor = 'pointer';
+    musicButton.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+    musicButton.style.transition = 'all 0.3s ease';
+    
+    // Add hover effect
+    musicButton.onmouseenter = () => {
+      musicButton.style.transform = 'scale(1.05)';
+      musicButton.style.boxShadow = '0 6px 16px rgba(0,0,0,0.4)';
+    };
+    
+    musicButton.onmouseleave = () => {
+      musicButton.style.transform = 'scale(1)';
+      musicButton.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+    };
+  
+    musicButton.addEventListener("click", () => {
+      if (audioRef.current) {
+        if (isPlaying) {
+          audioRef.current.pause(); // Pause music
+          musicButton.innerHTML = "▶️ Play Music";
+        } else {
+          audioRef.current.play().catch((err) => {
+            console.error("Failed to play audio:", err);
+          });
+          musicButton.innerHTML = "⏸ Pause Music";
+        }
+        isPlaying = !isPlaying; // Toggle play state
+      }
+    });
+    
+    document.body.appendChild(musicButton);
+    
+    // Handle Cake Cutting
     document.querySelector(".knife")?.addEventListener("click", cutCake);
-
-    // 🏆 Add Cake Styling Immediately After cutCake function
+  
+    // Continue button click event
+    document.getElementById("cake-continue-btn")?.addEventListener("click", () => {
+      createInteractiveBirthdayCard();
+    });
+  
+    // Add CSS for the enhanced cake
     const style = document.createElement("style");
     style.textContent = `
+      body {
+        background: linear-gradient(135deg, #f5a9f2 0%, #b185db 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+  
       #cake-container {
-        position: fixed;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
+        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
-        z-index: 1000;
+        justify-content: center;
+        height: 100vh;
+        width: 100%;
       }
-
+  
+      .cake-scene {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: scale(1.2);
+        margin-bottom: 80px;
+      }
+  
       .cake {
         position: relative;
         width: 200px;
-        height: 150px;
+        height: 160px;
+        margin-bottom: 10px;
       }
-
-      .layer {
+  
+      .cake-base {
         position: absolute;
-        width: 100%;
-        border-radius: 10px;
-      }
-
-      .layer-bottom {
-        height: 50px;
-        background: #d2691e;
         bottom: 0;
+        width: 200px;
+        height: 120px;
+        background: linear-gradient(to right, #f9e0bb, #ffe4c4, #f9e0bb);
+        border-radius: 10px 10px 5px 5px;
+        box-shadow: inset -15px 0 rgba(0,0,0,0.1);
       }
-
-      .layer-middle {
-        height: 40px;
-        background: #ffb347;
-        bottom: 50px;
-      }
-
-      .layer-top {
-        height: 30px;
-        background: #ffcc80;
-        bottom: 90px;
-      }
-
-      .icing {
+  
+      .cake-frosting {
         position: absolute;
-        width: 100%;
-        height: 15px;
-        background: white;
-        top: 85px;
-        border-radius: 10px;
-      }
-
-      .plate {
-        position: absolute;
+        bottom: 100px;
         width: 220px;
-        height: 10px;
-        background: #ccc;
-        bottom: -10px;
-        border-radius: 50%;
+        height: 40px;
+        background: linear-gradient(to right, #ff9eb5, #ffc0cb, #ff9eb5);
+        border-radius: 10px 10px 0 0;
+        left: -10px;
+        box-shadow: inset 0 -8px 0 -4px rgba(255,255,255,0.4), 
+                    inset 0 -15px 5px -10px rgba(0,0,0,0.1);
       }
-
-      .candles {
+  
+      .cake-decoration {
         position: absolute;
-        top: 10px;
+        bottom: 100px;
+        width: 220px;
+        height: 15px;
+        left: -10px;
+        background-image: radial-gradient(circle at 50% 100%, #ff6b99 5px, transparent 6px),
+                            radial-gradient(circle at calc(50% - 25px) 100%, #ff6b99 5px, transparent 6px),
+                            radial-gradient(circle at calc(50% + 25px) 100%, #ff6b99 5px, transparent 6px),
+                            radial-gradient(circle at calc(50% - 50px) 100%, #ff6b99 5px, transparent 6px),
+                            radial-gradient(circle at calc(50% + 50px) 100%, #ff6b99 5px, transparent 6px),
+                            radial-gradient(circle at calc(50% - 75px) 100%, #ff6b99 5px, transparent 6px),
+                            radial-gradient(circle at calc(50% + 75px) 100%, #ff6b99 5px, transparent 6px);
+        z-index: 5;
+      }
+  
+      .cake-topper {
+        position: absolute;
+        bottom: 140px;
         left: 50%;
         transform: translateX(-50%);
+        font-size: 28px;
+        font-weight: bold;
+        color: #fff;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        padding: 8px 15px;
+        background: #ff6b8b;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 10;
+      }
+  
+      .candles {
+        position: absolute;
+        bottom: 120px;
+        width: 100%;
         display: flex;
-        gap: 10px;
+        justify-content: space-around;
+        padding: 0 30px;
+        z-index: 5;
       }
-
+  
       .candle {
-        width: 10px;
-        height: 30px;
-        background: red;
-        border-radius: 3px;
+        width: 8px;
+        height: 35px;
+        background: linear-gradient(to right, #fdfd96, #fff7a0, #fdfd96);
+        border-radius: 4px;
         position: relative;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
       }
-
+  
+      .candle-1 {
+        height: 40px;
+        transform: rotate(-5deg);
+      }
+  
+      .candle-2 {
+        height: 50px;
+      }
+  
+      .candle-3 {
+        height: 40px;
+        transform: rotate(5deg);
+      }
+  
       .flame {
         position: absolute;
         top: -15px;
         left: 50%;
         transform: translateX(-50%);
         width: 10px;
-        height: 15px;
-        background: orange;
-        border-radius: 50%;
-        animation: flicker 0.5s infinite alternate;
+        height: 18px;
+        background: linear-gradient(to top, #ff9d00, #ffeb3b);
+        border-radius: 50% 50% 35% 35%;
+        box-shadow: 0 0 10px #ff9d00, 0 0 20px rgba(255, 157, 0, 0.6);
+        animation: flicker 0.6s infinite alternate;
+        z-index: 10;
       }
-
+  
       @keyframes flicker {
-        from { opacity: 1; transform: scale(1); }
-        to { opacity: 0.8; transform: scale(1.1); }
+        0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+        100% { transform: translateX(-50%) scale(1.05) translateY(-2px); opacity: 1; }
       }
-
-      /* Knife */
+  
+      .cake-plate {
+        width: 260px;
+        height: 15px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      }
+  
+      .cake-shadow {
+        width: 230px;
+        height: 10px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        filter: blur(5px);
+        margin-top: 5px;
+      }
+  
       .knife {
         font-size: 40px;
         cursor: pointer;
-        margin-top: 20px;
+        margin-top: 30px;
+        filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
         animation: bounce 1s infinite alternate;
+        transform-origin: bottom center;
       }
-
+  
       @keyframes bounce {
-        from { transform: translateY(0); }
-        to { transform: translateY(-10px); }
+        from { transform: translateY(0) rotate(15deg); }
+        to { transform: translateY(-10px) rotate(25deg); }
       }
-
-      /* Cake Slice */
+  
+      .knife:hover {
+        animation: wobble 0.5s infinite alternate;
+      }
+  
+      @keyframes wobble {
+        from { transform: translateY(0) rotate(15deg); }
+        to { transform: translateY(-5px) rotate(35deg); }
+      }
+  
+      /* Cake slice animation */
       .cake-slice {
         position: absolute;
-        width: 50px;
-        height: 50px;
-        left: 50px;
+        width: 60px;
+        height: 100px;
+        background: linear-gradient(135deg, #ffe4c4 0%, #f9e0bb 50%, #ffe4c4 100%);
+        border-radius: 5px;
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
         bottom: 0;
-        transform-origin: bottom left;
+        left: 70px;
+        transform-origin: bottom center;
         transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+        z-index: 20;
       }
-
-      .slice-layer {
-        width: 100%;
+  
+      .slice-frosting {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 60px;
         height: 15px;
-       }
-
-      .slice-layer.layer-bottom {
-        background: #d2691e;
-       }
-
-      .slice-layer.layer-middle {
-        background: #ffb347;
-       }
-
-      .slice-layer.layer-top {
-        background: #ffcc80;
+        background: #ffc0cb;
+        border-radius: 5px 5px 0 0;
       }
-
-      .slice-icing {
-        background: white;
-        height: 5px;
+  
+      .continue-btn {
+        position: fixed;
+        bottom: 70px;
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #ff6b8b, #ff4081);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+        transition: all 0.3s ease;
+        animation: pulse 1.5s infinite alternate;
+        opacity: 0;
+        animation: fadeIn 0.5s forwards;
+        animation-delay: 5s;
+      }
+  
+      .continue-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
+      }
+  
+      @keyframes pulse {
+        from { transform: scale(1); box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3); }
+        to { transform: scale(1.05); box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5); }
+      }
+  
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
       }
     `;
-
+  
     document.head.appendChild(style);
-
   }
-
+  
   function cutCake() {
     const cake = document.querySelector(".cake");
     if (!cake) return;
@@ -309,20 +476,57 @@ export default function BirthdayWish() {
     const cakeSlice = document.createElement("div");
     cakeSlice.classList.add("cake-slice");
   
-    // Positioning & Animation
-    cakeSlice.innerHTML = `
-      <div class="slice-layer layer-bottom"></div>
-      <div class="slice-layer layer-middle"></div>
-      <div class="slice-layer layer-top"></div>
-      <div class="slice-icing"></div>
-    `;
+    // Add frosting to the slice
+    const sliceFrosting = document.createElement("div");
+    sliceFrosting.classList.add("slice-frosting");
+    cakeSlice.appendChild(sliceFrosting);
   
     cake.appendChild(cakeSlice);
   
+    // Add sparkle effect around the slice
+    const sparkles = 10;
+    for (let i = 0; i < sparkles; i++) {
+      const sparkle = document.createElement("div");
+      sparkle.style.position = "absolute";
+      sparkle.style.width = "8px";
+      sparkle.style.height = "8px";
+      sparkle.style.borderRadius = "50%";
+      sparkle.style.background = "white";
+      sparkle.style.boxShadow = "0 0 10px 2px rgba(255,255,255,0.8)";
+      
+      // Random position around the slice
+      const angle = Math.random() * Math.PI;
+      const distance = 30 + Math.random() * 50;
+      sparkle.style.left = `${70 + Math.cos(angle) * distance}px`;
+      sparkle.style.bottom = `${Math.sin(angle) * distance}px`;
+      
+      // Animation
+      sparkle.style.animation = `sparkle-fade ${0.5 + Math.random() * 0.5}s forwards`;
+      
+      cake.appendChild(sparkle);
+      
+      // Remove sparkle after animation
+      setTimeout(() => {
+        sparkle.remove();
+      }, 1500);
+    }
+  
+    // Add sparkle animation
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes sparkle-fade {
+        0% { transform: scale(0); opacity: 1; }
+        50% { transform: scale(1.5); opacity: 0.8; }
+        100% { transform: scale(0); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+  
+    // Animate the slice
     setTimeout(() => {
-      cakeSlice.style.transform = "translateX(100px) rotate(10deg)";
-      cakeSlice.style.opacity = "0";
-    }, 1000);
+      cakeSlice.style.transform = "translateX(150px) translateY(-50px) rotate(45deg)";
+      cakeSlice.style.opacity = "0.7";
+    }, 100);
   
     // Remove slice after animation
     setTimeout(() => {
@@ -1845,5 +2049,9 @@ export default function BirthdayWish() {
       </div>
     </>
   )
+}
+
+function createInteractiveBirthdayCard() {
+  throw new Error("Function not implemented.");
 }
 
