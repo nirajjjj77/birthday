@@ -12,6 +12,9 @@ export default function BirthdayWish() {
 
   // Add this new function to create a floating music button
   function createMusicButton() {
+    const existingButton = document.getElementById("music-button");
+    if (existingButton) return; // Ensure only one instance exists
+
     const musicButton = document.createElement('button');
     let isPlaying = false; // Initial state
     
@@ -23,11 +26,12 @@ export default function BirthdayWish() {
     // Set initial button text based on playback state
     musicButton.innerHTML = isPlaying ? "⏸ Pause" : "🎵 Play Music";
     musicButton.className = 'music-button';
+    musicButton.id = "music-button"; // Add an ID
     
     // Style the button
     musicButton.style.position = 'fixed';
     musicButton.style.bottom = '20px';
-    musicButton.style.right = '20px';
+    musicButton.style.left = '20px';
     musicButton.style.zIndex = '1000';
     musicButton.style.background = 'rgba(255, 82, 168, 0.9)';
     musicButton.style.color = 'white';
@@ -68,6 +72,47 @@ export default function BirthdayWish() {
     
     document.body.appendChild(musicButton);
   }
+
+  function createTimerButton() {
+    const existingTimer = document.getElementById("timer-button");
+    if (existingTimer) return; // Ensure only one instance exists
+  
+    const timerButton = document.createElement('button');
+    let timeLeft = 45; // Start with 45 seconds
+    timerButton.id = "timer-button";
+  
+    // Style the timer button
+    timerButton.style.position = 'fixed';
+    timerButton.style.bottom = '20px';
+    timerButton.style.right = '20px'; // Timer on the right side
+    timerButton.style.zIndex = '1000';
+    timerButton.style.background = 'rgba(82, 168, 255, 0.9)';
+    timerButton.style.color = 'white';
+    timerButton.style.border = 'none';
+    timerButton.style.borderRadius = '30px';
+    timerButton.style.padding = '12px 20px';
+    timerButton.style.fontSize = '16px';
+    timerButton.style.fontWeight = 'bold';
+    timerButton.style.cursor = 'pointer';
+    timerButton.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+    timerButton.style.transition = 'all 0.3s ease';
+  
+    timerButton.innerHTML = `⏳ ${timeLeft}s`;
+  
+    document.body.appendChild(timerButton);
+  
+    // Countdown logic
+    const countdown = setInterval(() => {
+      timeLeft -= 1;
+      if (timeLeft > 0) {
+        timerButton.innerHTML = `⏳ ${timeLeft}s`;
+      } else {
+        clearInterval(countdown);
+        timerButton.innerHTML = "▶️ Continue"; // Change to continue button
+        timerButton.style.background = "rgba(0, 200, 0, 0.9)"; // Change color to green
+      }
+    }, 1000);
+  }  
 
   useEffect(() => {
     const appHeight = () => {
@@ -525,8 +570,9 @@ export default function BirthdayWish() {
       cardContainer.appendChild(card);
       document.body.appendChild(cardContainer);
 
-      // Create a music button user can click to start music
+      // Create a music button user can click to start music and starts a timer
       createMusicButton();
+      createTimerButton();
       
       // Add card flip functionality
       card.addEventListener('click', () => {
@@ -1433,7 +1479,7 @@ export default function BirthdayWish() {
         clicked = true;
 
         mainMessage.style.pointerEvents = "none"; // Disable further clicks
-        
+
         // First show fireworks
         createFireworks()
 
