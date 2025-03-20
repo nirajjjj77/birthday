@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect, useRef } from "react";
+import { Analytics } from "@vercel/analytics/react"
 
 export default function BirthdayWish() {
   // Add a state variable to track score
