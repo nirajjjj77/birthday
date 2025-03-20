@@ -110,10 +110,224 @@ export default function BirthdayWish() {
         clearInterval(countdown);
         timerButton.innerHTML = "▶️ Continue"; // Change to continue button
         timerButton.style.background = "rgba(0, 200, 0, 0.9)"; // Change color to green
+
+        // Add click event to show the cake
+        timerButton.addEventListener("click", () => {
+          timerButton.remove(); // Remove button
+          createCakeScene(); // Show cake
+        });
       }
     }, 1000);
   }  
 
+  function createCakeScene() {
+    // Remove existing cake if any
+    const existingCake = document.getElementById("cake-container");
+    if (existingCake) return;
+  
+    // Create Cake Container
+    const cakeContainer = document.createElement("div");
+    cakeContainer.id = "cake-container";
+  
+    // Cake HTML Structure
+    cakeContainer.innerHTML = `
+      <div class="cake">
+        <div class="layer layer-bottom"></div>
+        <div class="layer layer-middle"></div>
+        <div class="layer layer-top"></div>
+        <div class="icing"></div>
+        <div class="drips"></div>
+        <div class="plate"></div>
+        <div class="candles">
+          <div class="candle"><div class="flame"></div></div>
+          <div class="candle"><div class="flame"></div></div>
+          <div class="candle"><div class="flame"></div></div>
+        </div>
+      </div>
+      <div class="knife">🔪</div>
+    `;
+  
+    document.body.appendChild(cakeContainer);
+  
+    // 🎂 Handle Cake Cutting
+    document.querySelector(".knife")?.addEventListener("click", cutCake);
+
+    // 🏆 Add Cake Styling Immediately After cutCake function
+    const style = document.createElement("style");
+    style.textContent = `
+      #cake-container {
+        position: fixed;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .cake {
+        position: relative;
+        width: 200px;
+        height: 150px;
+      }
+
+      .layer {
+        position: absolute;
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .layer-bottom {
+        height: 50px;
+        background: #d2691e;
+        bottom: 0;
+      }
+
+      .layer-middle {
+        height: 40px;
+        background: #ffb347;
+        bottom: 50px;
+      }
+
+      .layer-top {
+        height: 30px;
+        background: #ffcc80;
+        bottom: 90px;
+      }
+
+      .icing {
+        position: absolute;
+        width: 100%;
+        height: 15px;
+        background: white;
+        top: 85px;
+        border-radius: 10px;
+      }
+
+      .plate {
+        position: absolute;
+        width: 220px;
+        height: 10px;
+        background: #ccc;
+        bottom: -10px;
+        border-radius: 50%;
+      }
+
+      .candles {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+      }
+
+      .candle {
+        width: 10px;
+        height: 30px;
+        background: red;
+        border-radius: 3px;
+        position: relative;
+      }
+
+      .flame {
+        position: absolute;
+        top: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 10px;
+        height: 15px;
+        background: orange;
+        border-radius: 50%;
+        animation: flicker 0.5s infinite alternate;
+      }
+
+      @keyframes flicker {
+        from { opacity: 1; transform: scale(1); }
+        to { opacity: 0.8; transform: scale(1.1); }
+      }
+
+      /* Knife */
+      .knife {
+        font-size: 40px;
+        cursor: pointer;
+        margin-top: 20px;
+        animation: bounce 1s infinite alternate;
+      }
+
+      @keyframes bounce {
+        from { transform: translateY(0); }
+        to { transform: translateY(-10px); }
+      }
+
+      /* Cake Slice */
+      .cake-slice {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        left: 50px;
+        bottom: 0;
+        transform-origin: bottom left;
+        transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+      }
+
+      .slice-layer {
+        width: 100%;
+        height: 15px;
+       }
+
+      .slice-layer.layer-bottom {
+        background: #d2691e;
+       }
+
+      .slice-layer.layer-middle {
+        background: #ffb347;
+       }
+
+      .slice-layer.layer-top {
+        background: #ffcc80;
+      }
+
+      .slice-icing {
+        background: white;
+        height: 5px;
+      }
+    `;
+
+    document.head.appendChild(style);
+
+  }
+
+  function cutCake() {
+    const cake = document.querySelector(".cake");
+    if (!cake) return;
+  
+    // Create a cake slice
+    const cakeSlice = document.createElement("div");
+    cakeSlice.classList.add("cake-slice");
+  
+    // Positioning & Animation
+    cakeSlice.innerHTML = `
+      <div class="slice-layer layer-bottom"></div>
+      <div class="slice-layer layer-middle"></div>
+      <div class="slice-layer layer-top"></div>
+      <div class="slice-icing"></div>
+    `;
+  
+    cake.appendChild(cakeSlice);
+  
+    setTimeout(() => {
+      cakeSlice.style.transform = "translateX(100px) rotate(10deg)";
+      cakeSlice.style.opacity = "0";
+    }, 1000);
+  
+    // Remove slice after animation
+    setTimeout(() => {
+      cakeSlice.remove();
+    }, 2000);
+  }
+  
   useEffect(() => {
     const appHeight = () => {
       const doc = document.documentElement
