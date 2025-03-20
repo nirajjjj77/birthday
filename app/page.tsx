@@ -124,6 +124,8 @@ export default function BirthdayWish() {
     // Remove existing cake if any
     const existingCake = document.getElementById("cake-container");
     if (existingCake) return;
+
+    document.body.innerHTML = '';
   
     // Create Cake Container
     const cakeContainer = document.createElement("div");
