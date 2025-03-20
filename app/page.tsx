@@ -24,7 +24,7 @@ export default function BirthdayWish() {
     }
     
     // Set initial button text based on playback state
-    musicButton.innerHTML = isPlaying ? "⏸ Pause" : "🎵 Play Music";
+    musicButton.innerHTML = isPlaying ? "⏸ Pause Music" : "🎵 Play Music";
     musicButton.className = 'music-button';
     musicButton.id = "music-button"; // Add an ID
     
