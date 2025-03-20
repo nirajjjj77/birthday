@@ -1426,7 +1426,14 @@ export default function BirthdayWish() {
       thirdMessage.style.display = "none";
       fourthMessage.style.display = "none";
 
+      let clicked = false; // Track if button has been clicked
+
       mainMessage.addEventListener("click", () => {
+        if (clicked) return; // Prevent multiple activations
+        clicked = true;
+
+        mainMessage.style.pointerEvents = "none"; // Disable further clicks
+        
         // First show fireworks
         createFireworks()
 
