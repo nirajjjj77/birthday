@@ -529,9 +529,142 @@ export default function BirthdayWish() {
       cardContainer.appendChild(card);
       document.body.appendChild(cardContainer);
 
-      // Create a music button user can click to start music and starts a timer
-      createMusicButton();
+      createMusicButton(); // Add music button
+
+      // Add continue button after 5 seconds
+      setTimeout(() => {
+        const continueButton = document.createElement('button');
+        continueButton.className = 'continue-button';
+        continueButton.textContent = 'Continue';
+    
+        // Style the continue button
+        continueButton.style.position = 'fixed';
+        continueButton.style.bottom = '20px';
+        continueButton.style.right = '20px';
+        continueButton.style.padding = '12px 24px';
+        continueButton.style.background = 'linear-gradient(135deg, #ff6b99 0%, #ff96b8 100%)';
+        continueButton.style.color = 'white';
+        continueButton.style.border = 'none';
+        continueButton.style.borderRadius = '30px';
+        continueButton.style.fontSize = '16px';
+        continueButton.style.fontWeight = 'bold';
+        continueButton.style.cursor = 'pointer';
+        continueButton.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+        continueButton.style.transition = 'all 0.3s ease';
+        continueButton.style.zIndex = '1000';
+
+        // Add hover effects
+        continueButton.onmouseenter = () => {
+          continueButton.style.transform = 'scale(1.05)';
+          continueButton.style.boxShadow = '0 6px 16px rgba(0,0,0,0.4)';
+        };
+    
+        continueButton.onmouseleave = () => {
+          continueButton.style.transform = 'scale(1)';
+          continueButton.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+        };
+
+        // Add click handler for the continue button
+        continueButton.addEventListener('click', () => {
+          // Remove everything except background
+          cardContainer.remove();
+          const musicButton = document.getElementById('music-button');
+          if (musicButton) musicButton.remove();
+          continueButton.remove();
+
+          // Create and show the cake
+          const cakeContainer = document.createElement('div');
+          cakeContainer.className = 'cake-container';
+          cakeContainer.innerHTML = `
+            <div class="cake">
+              <div class="cake-base"></div>
+              <div class="cake-middle"></div>
+              <div class="cake-top"></div>
+              <div class="candle">
+                <div class="flame"></div>
+              </div>
+            </div>
+          `;
+
+          // Add cake styles
+          const cakeStyles = `
+            .cake-container {
+              position: fixed;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            .cake {
+              position: relative;
+              width: 200px;
+              height: 200px;
+            }
+            .cake-base, .cake-middle, .cake-top {
+              position: absolute;
+              width: 100%;
+              background: #ff69b4;
+              border-radius: 10px;
+              box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+            .cake-base {
+              height: 60px;
+              bottom: 0;
+            }
+            .cake-middle {
+              height: 50px;
+              bottom: 60px;
+              left: 10%;
+              width: 80%;
+            }
+            .cake-top {
+              height: 40px;
+              bottom: 110px;
+              left: 15%;
+              width: 70%;
+            }
+            .candle {
+              position: absolute;
+              bottom: 150px;
+              left: 50%;
+              width: 8px;
+              height: 30px;
+              background: #ffd700;
+              border-radius: 4px;
+              transform: translateX(-50%);
+            }
+            .flame {
+              position: absolute;
+              top: -15px;
+              left: 50%;
+              width: 12px;
+              height: 15px;
+              background: #ff4500;
+              border-radius: 50% 50% 20% 20%;
+              transform: translateX(-50%);
+              box-shadow: 0 0 10px #ff4500, 0 0 20px #ff4500;
+              animation: flicker 0.6s infinite alternate;
+            }
+            @keyframes flicker {
+              0% { transform: translateX(-50%) scale(1); }
+              100% { transform: translateX(-50%) scale(1.2); }
+            }
+          `;
       
+          // Add styles to document
+          const styleSheet = document.createElement('style');
+          styleSheet.textContent = cakeStyles;
+          document.head.appendChild(styleSheet);
+
+          // Add cake to document
+          document.body.appendChild(cakeContainer);
+        });
+
+        document.body.appendChild(continueButton);
+      }, 5000); // 5 seconds delay
+
       // Add card flip functionality
       card.addEventListener('click', () => {
         card.classList.toggle('flipped');
