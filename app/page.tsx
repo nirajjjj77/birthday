@@ -576,17 +576,31 @@ export default function BirthdayWish() {
           const cakeContainer = document.createElement('div');
           cakeContainer.className = 'cake-container';
           cakeContainer.innerHTML = `
-            <div class="cake">
-              <div class="cake-top">
+            <div class="cake-container">
+              <div class="cake">
+                <div class="cake-top"></div>
+                <div class="cake-middle"></div>
+                <div class="cake-bottom"></div>
+                <div class="plate"></div>
                 <div class="candle">
                   <div class="flame"></div>
                 </div>
               </div>
-              <div class="cake-middle"></div>
-              <div class="cake-bottom"></div>
-              <div class="plate"></div>
+              <div class="cake-sparkles"></div>
+              <div class="cake-background">
+                <div class="confetti"></div>
+                <div class="confetti"></div>
+                <div class="confetti"></div>
+                <div class="confetti"></div>
+                <div class="confetti"></div>
+                <div class="confetti"></div>
+                <div class="confetti"></div>
+              </div>
+              <div class="stars"></div>
+              <div class="stars"></div>
+              <div class="stars"></div>
+              <div class="stars"></div>
             </div>
-            <div class="cake-sparkles"></div>
           `;
 
           // Add cake styles
@@ -597,6 +611,8 @@ export default function BirthdayWish() {
               left: 50%;
               transform: translate(-50%, -50%);
               perspective: 1000px;
+              width: 300px;
+              height: 300px;
             }
 
             .cake {
@@ -608,8 +624,8 @@ export default function BirthdayWish() {
             }
 
             @keyframes cakeAppear {
-              0% { transform: translateY(50px) scale(0.5); opacity: 0; }
-              100% { transform: translateY(0) scale(1); opacity: 1; }
+              0% { transform: translateY(50px) scale(0.5) rotateY(180deg); opacity: 0; }
+              100% { transform: translateY(0) scale(1) rotateY(0); opacity: 1; }
             }
 
             .cake-top {
@@ -622,15 +638,29 @@ export default function BirthdayWish() {
               left: 20%;
               transform: translateZ(20px);
               box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-              &::after {
-                content: '';
-                position: absolute;
-                width: 100%;
-                height: 20px;
-                background: linear-gradient(135deg, #ff96b8, #ff3366);
-                bottom: 0;
-                border-radius: 8px;
-              }
+            }
+
+            
+            .cake-top::after {
+              content: '';
+              position: absolute;
+              width: 100%;
+              height: 20px;
+              background: linear-gradient(135deg, #ff96b8, #ff3366);
+              bottom: 0;
+              border-radius: 8px;
+            }
+
+            /* Frosting decorations */
+            .cake-top::before {
+              content: '';
+              position: absolute;
+              width: 100%;
+              height: 10px;
+              background: white;
+              top: -5px;
+              border-radius: 50%;
+              background: repeating-radial-gradient(circle at 10px 5px, white, white 5px, transparent 5px, transparent 10px);
             }
 
             .cake-middle {
@@ -643,14 +673,31 @@ export default function BirthdayWish() {
               left: 10%;
               transform: translateZ(10px);
               box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-              &::before {
-                content: '';
-                position: absolute;
-                width: 100%;
-                height: 15px;
-                background: repeating-linear-gradient(45deg, #ff96b8, #ff96b8 10px, #ff82b2 10px, #ff82b2 20px);
-                top: 10px;
-              }
+            }
+
+            .cake-middle::before {
+              content: '';
+              position: absolute;
+              width: 100%;
+              height: 15px;
+              background: repeating-linear-gradient(45deg, #ff96b8, #ff96b8 10px, #ff82b2 10px, #ff82b2 20px);
+              top: 10px;
+            }
+
+            /* Add sprinkles to middle layer */
+            .cake-middle::after {
+              content: '';
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              background-image: 
+                radial-gradient(circle, #ffff00 1px, transparent 1px),
+                radial-gradient(circle, #00ffff 1px, transparent 1px),
+                radial-gradient(circle, #ff00ff 1px, transparent 1px),
+                radial-gradient(circle, #00ff00 1px, transparent 1px);
+              background-size: 16px 16px;
+              background-position: 0 0, 8px 8px, 4px 4px, 12px 12px;
+              opacity: 0.6;
             }
 
             .cake-bottom {
@@ -663,26 +710,53 @@ export default function BirthdayWish() {
               left: 0;
               transform: translateZ(0);
               box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-              &::after {
-                content: '';
-                position: absolute;
-                width: 100%;
-                height: 20px;
-                background: repeating-linear-gradient(-45deg, #ff96b8, #ff96b8 10px, #ff82b2 10px, #ff82b2 20px);
-                bottom: 10px;
-              }
+            }
+
+            .cake-bottom::after {
+              content: '';
+              position: absolute;
+              width: 100%;
+              height: 20px;
+              background: repeating-linear-gradient(-45deg, #ff96b8, #ff96b8 10px, #ff82b2 10px, #ff82b2 20px);
+              bottom: 10px;
+            }
+
+            /* Add dripping frosting */
+            .cake-bottom::before {
+              content: '';
+              position: absolute;
+              height: 15px;
+              width: 100%;
+              background: 
+                radial-gradient(circle at 10% 0, transparent 15px, #ffb6e1 15px),
+                radial-gradient(circle at 30% 0, transparent 15px, #ffb6e1 15px),
+                radial-gradient(circle at 50% 0, transparent 15px, #ffb6e1 15px),
+                radial-gradient(circle at 70% 0, transparent 15px, #ffb6e1 15px),
+                radial-gradient(circle at 90% 0, transparent 15px, #ffb6e1 15px);
+              top: -8px;
             }
 
             .plate {
               position: absolute;
-              width: 270px;
-              height: 15px;
+              width: 300px;
+              height: 20px;
               background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
               border-radius: 50%;
-              bottom: -10px;
-              left: -10px;
+              bottom: -14px;
+              left: -25px;
               transform: translateZ(-10px);
               box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            .plate::after {
+              content: '';
+              position: absolute;
+              width: 90%;
+              height: 90%;
+              top: 5%;
+              left: 5%;
+              border-radius: 50%;
+              background: linear-gradient(135deg, transparent, rgba(255,255,255,0.5));
             }
 
             .candle {
@@ -695,22 +769,34 @@ export default function BirthdayWish() {
               transform: translateX(-50%);
               border-radius: 5px;
               z-index: 2;
-              &::before {
-                content: '';
-                position: absolute;
-                width: 100%;
-                height: 5px;
-                background: #ff9ecd;
-                bottom: 0;
-                border-radius: 5px;
-              }
+            }
+
+            .candle::before {
+              content: '';
+              position: absolute;
+              width: 100%;
+              height: 5px;
+              background: #ff9ecd;
+              bottom: 0;
+              border-radius: 5px;
+            }
+            
+            /* Add candle details */
+            .candle::after {
+              content: '';
+              position: absolute;
+              width: 80%;
+              height: 80%;
+              top: 5%;
+              left: 10%;
+              background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
             }
 
             .flame {
               position: absolute;
               width: 16px;
               height: 20px;
-              background: #ff9d00;
+              background: linear-gradient(to top, #ff9d00, #ff4500);
               border-radius: 50% 50% 20% 20%;
               top: -18px;
               left: 50%;
@@ -723,6 +809,27 @@ export default function BirthdayWish() {
                 0 0 30px #ff4500,
                 0 0 40px #ff4500;
               z-index: 3;
+            }
+
+            /* Enhanced flame effect */
+            .flame::before {
+              content: '';
+              position: absolute;
+              width: 60%;
+              height: 60%;
+              background: rgba(255, 255, 255, 0.7);
+              border-radius: 50%;
+              top: 20%;
+              left: 20%;
+              filter: blur(2px);
+            }
+
+            .cake-sparkles {
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              top: 0;
+              left: 0;
             }
 
             .cake-sparkles::before,
@@ -747,6 +854,20 @@ export default function BirthdayWish() {
               animation: sparkle 1.5s ease-in-out 0.5s infinite;
             }
 
+            
+            /* Add more sparkles */
+            .cake-sparkles::nth-child(1) {
+              top: 30%;
+              left: 70%;
+              animation: sparkle 2s ease-in-out 0.3s infinite;
+            }
+
+            .cake-sparkles::nth-child(2) {
+              top: 70%;
+              left: 40%;
+              animation: sparkle 1.7s ease-in-out 0.7s infinite;
+            }
+
             @keyframes flicker {
               0% { transform: translateX(-50%) scale(1) rotate(-5deg); }
               25% { transform: translateX(-50%) scale(1.1) rotate(5deg); }
@@ -759,6 +880,14 @@ export default function BirthdayWish() {
               0% { transform: scale(0) rotate(0deg); opacity: 0; }
               50% { transform: scale(1) rotate(180deg); opacity: 0.8; }
               100% { transform: scale(0) rotate(360deg); opacity: 0; }
+            }
+
+            /* Enhanced floating elements around the cake */
+            .cake-container::before,
+            .cake-container::after,
+            .cake-container {
+              content: '';
+              position: absolute;
             }
 
             /* Add some floating hearts around the cake */
@@ -782,10 +911,155 @@ export default function BirthdayWish() {
               animation-delay: 1s;
             }
 
+            /* Add more decorative elements around the cake */
+            .cake-container::before {
+              content: '🎉';
+              font-size: 25px;
+              left: -40px;
+              top: 30%;
+              animation: float 3.5s ease-in-out infinite;
+            }
+
+            .cake-container::after {
+              content: '🎂';
+              font-size: 22px;
+              right: -40px;
+              top: 20%;
+              animation: float 4s ease-in-out 0.5s infinite;
+            }
+
+            /* Add decorative background elements */
+            .cake-background {
+              position: absolute;
+              width: 400px;
+              height: 400px;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              z-index: -1;
+              overflow: hidden;
+              border-radius: 50%;
+              pointer-events: none;
+            }
+            
+            .cake-background::before {
+              content: '';
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 182, 193, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 70% 60%, rgba(255, 218, 185, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(221, 160, 221, 0.2) 0%, transparent 60%);
+            }
+
+            /* Add confetti to the background */
+            .confetti {
+              position: absolute;
+              width: 8px;
+              height: 8px;
+              background: #f0f0f0;
+              opacity: 0.7;
+            }
+            
+            .confetti:nth-child(1) {
+              left: 20%;
+              top: 10%;
+              background: #ff96b8;
+              animation: confetti-fall 5s linear infinite;
+            }
+            
+            .confetti:nth-child(2) {
+              left: 40%;
+              top: 5%;
+              background: #ffeb99;
+              animation: confetti-fall 4.5s linear 0.3s infinite;
+            }
+            
+            .confetti:nth-child(3) {
+              left: 60%;
+              top: 8%;
+              background: #a5d8ff;
+              animation: confetti-fall 6s linear 0.7s infinite;
+            }
+            
+            .confetti:nth-child(4) {
+              left: 80%;
+              top: 15%;
+              background: #c9a8ff;
+              animation: confetti-fall 5.5s linear 1s infinite;
+            }
+            
+            .confetti:nth-child(5) {
+              left: 30%;
+              top: 5%;
+              background: #a7ff83;
+              animation: confetti-fall 5.2s linear 1.3s infinite;
+            }
+            
+            .confetti:nth-child(6) {
+              left: 70%;
+              top: 7%;
+              background: #ff96b8;
+              animation: confetti-fall 4.8s linear 1.7s infinite;
+            }
+            
+            @keyframes confetti-fall {
+              0% { transform: translateY(-50px) rotate(0deg); opacity: 0.7; }
+              100% { transform: translateY(400px) rotate(360deg); opacity: 0; }
+            }
+
             @keyframes float {
-              0% { transform: translateY(0) rotate(0deg); }
-              50% { transform: translateY(-20px) rotate(10deg); }
-              100% { transform: translateY(0) rotate(0deg); }
+              0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+              50% { transform: translateY(-20px) rotate(10deg); opacity: 1; }
+              100% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            }
+
+            /* Additional stars and magical elements */
+            .star {
+              position: absolute;
+              opacity: 0;
+              animation: star-appear 4s ease-in-out infinite;
+            }
+            
+            .star:nth-child(1) {
+              content: '✨';
+              font-size: 18px;
+              left: -20px;
+              top: 20%;
+              animation-delay: 0.5s;
+            }
+            
+            .star:nth-child(2) {
+              content: '✨';
+              font-size: 15px;
+              right: -15px;
+              top: 30%;
+              animation-delay: 1.5s;
+            }
+            
+            .star:nth-child(3) {
+              content: '✨';
+              font-size: 20px;
+              left: 20px;
+              bottom: 20%;
+              animation-delay: 2.5s;
+            }
+            
+            .star:nth-child(4) {
+              content: '✨';
+              font-size: 16px;
+              right: 30px;
+              bottom: 30%;
+              animation-delay: 3.5s;
+            }
+            
+            @keyframes star-appear {
+              0% { transform: scale(0); opacity: 0; }
+              20% { transform: scale(1.2); opacity: 1; }
+              40% { transform: scale(1); opacity: 0.8; }
+              70% { transform: scale(1.1); opacity: 0.9; }
+              100% { transform: scale(0); opacity: 0; }
             }
           `;
       
