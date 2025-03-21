@@ -577,13 +577,16 @@ export default function BirthdayWish() {
           cakeContainer.className = 'cake-container';
           cakeContainer.innerHTML = `
             <div class="cake">
-              <div class="cake-base"></div>
-              <div class="cake-middle"></div>
-              <div class="cake-top"></div>
-              <div class="candle">
-                <div class="flame"></div>
+              <div class="cake-top">
+                <div class="candle">
+                  <div class="flame"></div>
+                </div>
               </div>
+              <div class="cake-middle"></div>
+              <div class="cake-bottom"></div>
+              <div class="plate"></div>
             </div>
+            <div class="cake-sparkles"></div>
           `;
 
           // Add cake styles
@@ -593,63 +596,193 @@ export default function BirthdayWish() {
               top: 50%;
               left: 50%;
               transform: translate(-50%, -50%);
-              display: flex;
-              justify-content: center;
-              align-items: center;
+              perspective: 1000px;
             }
+
             .cake {
               position: relative;
-              width: 200px;
+              width: 250px;
               height: 200px;
+              transform-style: preserve-3d;
+              animation: cakeAppear 1s ease-out forwards;
             }
-            .cake-base, .cake-middle, .cake-top {
+
+            @keyframes cakeAppear {
+              0% { transform: translateY(50px) scale(0.5); opacity: 0; }
+              100% { transform: translateY(0) scale(1); opacity: 1; }
+            }
+
+            .cake-top {
               position: absolute;
               width: 100%;
-              background: #ff69b4;
-              border-radius: 10px;
-              box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            }
-            .cake-base {
               height: 60px;
-              bottom: 0;
+              background: linear-gradient(135deg, #ff9ecd, #ff6b99);
+              border-radius: 8px;
+              top: 0;
+              transform: translateZ(20px);
+              box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+              &::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 20px;
+                background: linear-gradient(135deg, #ff96b8, #ff3366);
+                bottom: 0;
+                border-radius: 8px;
+              }
             }
+
             .cake-middle {
+              position: absolute;
+              width: 90%;
               height: 50px;
-              bottom: 60px;
-              left: 10%;
+              background: linear-gradient(135deg, #ffb6e1, #ff82b2);
+              border-radius: 8px;
+              top: 60px;
+              left: 5%;
+              transform: translateZ(10px);
+              box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+              &::before {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 15px;
+                background: repeating-linear-gradient(45deg, #ff96b8, #ff96b8 10px, #ff82b2 10px, #ff82b2 20px);
+                top: 10px;
+              }
+            }
+
+            .cake-bottom {
+              position: absolute;
               width: 80%;
+              height: 60px;
+              background: linear-gradient(135deg, #ffc6e9, #ff96b8);
+              border-radius: 8px;
+              top: 110px;
+              left: 10%;
+              transform: translateZ(0);
+              box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+              &::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 20px;
+                background: repeating-linear-gradient(-45deg, #ff96b8, #ff96b8 10px, #ff82b2 10px, #ff82b2 20px);
+                bottom: 10px;
+              }
             }
-            .cake-top {
-              height: 40px;
-              bottom: 110px;
-              left: 15%;
-              width: 70%;
+
+            .plate {
+              position: absolute;
+              width: 270px;
+              height: 15px;
+              background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+              border-radius: 50%;
+              bottom: -10px;
+              left: -10px;
+              transform: translateZ(-10px);
+              box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             }
+
             .candle {
               position: absolute;
-              bottom: 150px;
-              left: 50%;
-              width: 8px;
+              width: 10px;
               height: 30px;
-              background: #ffd700;
-              border-radius: 4px;
+              background: linear-gradient(135deg, #fff5cc, #ffeb99);
+              top: -30px;
+              left: 50%;
               transform: translateX(-50%);
+              border-radius: 5px;
+              &::before {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 5px;
+                background: #ff9ecd;
+                bottom: 0;
+                border-radius: 5px;
+              }
             }
+
             .flame {
               position: absolute;
-              top: -15px;
-              left: 50%;
-              width: 12px;
-              height: 15px;
-              background: #ff4500;
+              width: 16px;
+              height: 20px;
+              background: #ff9d00;
               border-radius: 50% 50% 20% 20%;
+              top: -18px;
+              left: 50%;
+              transform-origin: center bottom;
               transform: translateX(-50%);
-              box-shadow: 0 0 10px #ff4500, 0 0 20px #ff4500;
-              animation: flicker 0.6s infinite alternate;
+              animation: flicker 0.6s ease-in-out infinite alternate;
+              box-shadow: 
+                0 0 10px #ff9d00,
+                0 0 20px #ff9d00,
+                0 0 30px #ff4500,
+                0 0 40px #ff4500;
             }
+
+            .cake-sparkles::before,
+            .cake-sparkles::after {
+              content: '';
+              position: absolute;
+              width: 15px;
+              height: 15px;
+              background: white;
+              border-radius: 50%;
+            }
+
+            .cake-sparkles::before {
+              top: 20%;
+              left: 20%;
+              animation: sparkle 1.5s ease-in-out infinite;
+            }
+
+            .cake-sparkles::after {
+              top: 60%;
+              right: 20%;
+              animation: sparkle 1.5s ease-in-out 0.5s infinite;
+            }
+
             @keyframes flicker {
-              0% { transform: translateX(-50%) scale(1); }
-              100% { transform: translateX(-50%) scale(1.2); }
+              0% { transform: translateX(-50%) scale(1) rotate(-5deg); }
+              25% { transform: translateX(-50%) scale(1.1) rotate(5deg); }
+              50% { transform: translateX(-50%) scale(0.9) rotate(-2deg); }
+              75% { transform: translateX(-50%) scale(1.2) rotate(3deg); }
+              100% { transform: translateX(-50%) scale(1) rotate(0deg); }
+            }
+
+            @keyframes sparkle {
+              0% { transform: scale(0) rotate(0deg); opacity: 0; }
+              50% { transform: scale(1) rotate(180deg); opacity: 0.8; }
+              100% { transform: scale(0) rotate(360deg); opacity: 0; }
+            }
+
+            /* Add some floating hearts around the cake */
+            .cake::before,
+            .cake::after {
+              content: '❤️';
+              position: absolute;
+              font-size: 20px;
+              animation: float 3s ease-in-out infinite;
+            }
+
+            .cake::before {
+              left: -30px;
+              top: 40%;
+              animation-delay: 0.5s;
+            }
+
+            .cake::after {
+              right: -30px;
+              top: 60%;
+              animation-delay: 1s;
+            }
+
+            @keyframes float {
+              0% { transform: translateY(0) rotate(0deg); }
+              50% { transform: translateY(-20px) rotate(10deg); }
+              100% { transform: translateY(0) rotate(0deg); }
             }
           `;
       
