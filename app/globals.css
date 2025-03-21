@@ -367,6 +367,99 @@ body {
   animation: spin 1s ease-in-out infinite;
 }
 
+/* Add these styles to your existing globals.css file */
+
+/* Styles for the birthday container */
+.birthday-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f0f0; /* Adjust background as needed */
+}
+
+/* Styles for the continue button */
+.continue-button {
+  position: absolute;
+  bottom: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Styles for the cake container */
+.cake-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Styles for the cake */
+.cake {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.cake-base,
+.cake-middle,
+.cake-top {
+  position: absolute;
+  width: 100%;
+  background: #ff69b4;
+  border-radius: 10px;
+}
+
+.cake-base {
+  height: 50px;
+  bottom: 0;
+}
+
+.cake-middle {
+  height: 40px;
+  bottom: 50px;
+  left: 10%;
+  width: 80%;
+}
+
+.cake-top {
+  height: 30px;
+  bottom: 90px;
+  left: 20%;
+  width: 60%;
+}
+
+.candle {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  width: 10px;
+  height: 30px;
+  background: yellow;
+  border-radius: 5px;
+  transform: translateX(-50%);
+}
+
+.flame {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 10px;
+  height: 15px;
+  background: orange;
+  border-radius: 50% 50% 20% 20%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px orange;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
