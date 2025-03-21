@@ -614,11 +614,12 @@ export default function BirthdayWish() {
 
             .cake-top {
               position: absolute;
-              width: 100%;
-              height: 60px;
+              width: 60%;
+              height: 40px;
               background: linear-gradient(135deg, #ff9ecd, #ff6b99);
               border-radius: 8px;
-              top: 0;
+              bottom: 110px;
+              left: 20%;
               transform: translateZ(20px);
               box-shadow: 0 4px 8px rgba(0,0,0,0.2);
               &::after {
@@ -634,12 +635,12 @@ export default function BirthdayWish() {
 
             .cake-middle {
               position: absolute;
-              width: 90%;
+              width: 80%;
               height: 50px;
               background: linear-gradient(135deg, #ffb6e1, #ff82b2);
               border-radius: 8px;
-              top: 60px;
-              left: 5%;
+              bottom: 60px;
+              left: 10%;
               transform: translateZ(10px);
               box-shadow: 0 4px 8px rgba(0,0,0,0.2);
               &::before {
@@ -654,12 +655,12 @@ export default function BirthdayWish() {
 
             .cake-bottom {
               position: absolute;
-              width: 80%;
+              width: 100%;
               height: 60px;
               background: linear-gradient(135deg, #ffc6e9, #ff96b8);
               border-radius: 8px;
-              top: 110px;
-              left: 10%;
+              bottom: 0;
+              left: 0;
               transform: translateZ(0);
               box-shadow: 0 4px 8px rgba(0,0,0,0.2);
               &::after {
@@ -689,7 +690,7 @@ export default function BirthdayWish() {
               width: 10px;
               height: 30px;
               background: linear-gradient(135deg, #fff5cc, #ffeb99);
-              top: -30px;
+              bottom: 150px;
               left: 50%;
               transform: translateX(-50%);
               border-radius: 5px;
