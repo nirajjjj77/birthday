@@ -694,6 +694,7 @@ export default function BirthdayWish() {
               left: 50%;
               transform: translateX(-50%);
               border-radius: 5px;
+              z-index: 2;
               &::before {
                 content: '';
                 position: absolute;
@@ -721,6 +722,7 @@ export default function BirthdayWish() {
                 0 0 20px #ff9d00,
                 0 0 30px #ff4500,
                 0 0 40px #ff4500;
+              z-index: 3;
             }
 
             .cake-sparkles::before,
