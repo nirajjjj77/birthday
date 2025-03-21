@@ -9,8 +9,6 @@ export default function BirthdayWish() {
   const gameActiveRef = useRef(false);
   // Add this new audio ref
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [showContinueButton, setShowContinueButton] = useState(false);
-  const [showCake, setShowCake] = useState(false);
 
   // Add this new function to create a floating music button
   function createMusicButton() {
@@ -107,10 +105,6 @@ export default function BirthdayWish() {
         console.log("Autoplay prevented:", error);
       });
     }
-
-    const timer = setTimeout(() => {
-      setShowContinueButton(true);
-    }, 5000);
 
     // Create a star shape SVG - performance optimized
     function createStarSVG(size: number, color: string, opacity: number) {
@@ -1559,13 +1553,8 @@ export default function BirthdayWish() {
         audioRef.current.pause();
         audioRef.current.src = "";
       }
-      clearTimeout(timer);
     };
   }, [])
-
-  const handleContinueClick = () => {
-    setShowCake(true);
-  };
 
   return (
     <>
@@ -1595,33 +1584,6 @@ export default function BirthdayWish() {
             <span className="text">Catch the emoji 🎂 to proceed</span>
           </div>
         </div>
-      </div>
-
-      <div className="birthday-container">
-        {!showCake && (
-          <>
-            <div className="content">
-              {/* Your existing content here */}
-            </div>
-            {showContinueButton && (
-              <button className="continue-button" onClick={handleContinueClick}>
-                Continue
-              </button>
-            )}
-          </>
-        )}
-        {showCake && (
-          <div className="cake-container">
-            <div className="cake">
-            <div className="cake-base"></div>
-              <div className="cake-middle"></div>
-              <div className="cake-top"></div>
-              <div className="candle">
-                <div className="flame"></div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </>
   )
