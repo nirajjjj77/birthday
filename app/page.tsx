@@ -517,12 +517,10 @@ export default function BirthdayWish() {
           <p class="birthday-signature">Again, Happy Birthday!</p>
         </div>
         <div class="card-decorations">
-          <div class="gift-box gift-box-1"></div>
           <div class="sparkle sparkle-1">✨</div>
-          <div class="gift-box gift-box-2"></div>
           <div class="sparkle sparkle-2">✨</div>
-          <div class="gift-box gift-box-3"></div>
           <div class="sparkle sparkle-3">✨</div>
+          <div class="sparkle sparkle-4">✨</div>
         </div>
       `;
       
@@ -1084,11 +1082,11 @@ export default function BirthdayWish() {
       card.addEventListener('click', () => {
         card.classList.toggle('flipped');
         
-        // Add gift box and sparkle animation when card is opened
+        // Add sparkle animation when card is opened
         if (card.classList.contains('flipped')) {
           setTimeout(() => {
-            const decorations = document.querySelectorAll('.gift-box, .sparkle');
-            decorations.forEach((element, index) => {
+            const sparkles = document.querySelectorAll('.sparkle');
+            sparkles.forEach((element, index) => {
               setTimeout(() => {
                 element.classList.add('float');
               }, index * 300);
@@ -1292,100 +1290,10 @@ export default function BirthdayWish() {
           pointer-events: none;
         }
         
-        /* Gift boxes */
-        .gift-box {
-          position: absolute;
-          width: 50px;
-          height: 50px;
-          bottom: -80px;
-          opacity: 0;
-          transition: transform 0.5s ease, opacity 0.5s ease;
-          background: linear-gradient(135deg, #ff9ecd, #ff6b99);
-          border-radius: 6px;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .gift-box::before {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: -5px;
-          right: -5px;
-          height: 10px;
-          background: #1e6fdf;
-          transform: translateY(-50%);
-          z-index: 2;
-        }
-        
-        .gift-box::after {
-          content: '';
-          position: absolute;
-          top: -5px;
-          bottom: -5px;
-          left: 50%;
-          width: 10px;
-          background: #1e6fdf;
-          transform: translateX(-50%);
-          z-index: 1;
-        }
-
-        /* Add bow on top */
-        .gift-box-1::before, .gift-box-2::before, .gift-box-3::before {
-          content: '';
-          position: absolute;
-          width: 20px;
-          height: 12px;
-          background: #1e6fdf; /* Blue bow color */
-          top: -10px;
-          left: 50%;
-          transform: translateX(-50%);
-          border-radius: 50% 50% 0 0;
-          z-index: 3;
-          box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Bow loops */
-        .gift-box-1::after, .gift-box-2::after, .gift-box-3::after {
-          content: '';
-          position: absolute;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background: #1e6fdf; /* Blue bow color */
-          top: -5px;
-          left: 40%;
-          box-shadow: 10px 0 0 #1e6fdf;
-          z-index: 4;
-        }
-        
-        .gift-box.float {
-          opacity: 1;
-          animation: gift-float 6s ease-in-out infinite;
-        }
-        
-        .gift-box-1 {
-          background: linear-gradient(135deg, #ff9ecd, #ff6b99);
-          left: 20%;
-          animation-delay: 0.2s;
-        }
-        
-        .gift-box-2 {
-          background: linear-gradient(135deg, #c9a8ff, #9932cc);
-          left: 50%;
-          animation-delay: 0.4s;
-        }
-        
-        .gift-box-3 {
-          background: linear-gradient(135deg, #a7ff83, #4dff88);
-          right: 20%;
-          animation-delay: 0.6s;
-        }
-        
         /* Sparkles */
         .sparkle {
           position: absolute;
           font-size: 28px;
-          bottom: -50px;
           opacity: 0;
           transition: opacity 0.5s ease;
           text-shadow: 0 0 10px white, 0 0 20px gold;
@@ -1393,33 +1301,37 @@ export default function BirthdayWish() {
         
         .sparkle.float {
           opacity: 1;
-          animation: sparkle-float 7s ease-in-out infinite;
+          animation: sparkle-pulse 3s ease-in-out infinite;
         }
         
-        .sparkle-1 {
-          left: 35%;
+       .sparkle-1 {
+          top: 20px;
+          left: 20px;
           animation-delay: 0.3s;
         }
-        
+
         .sparkle-2 {
-          left: 65%;
+          top: 20px;
+          right: 20px;
           animation-delay: 0.7s;
         }
         
         .sparkle-3 {
-          left: 80%;
+          bottom: 20px;
+          left: 20px;
           animation-delay: 1s;
         }
         
-        /* Animations */
-        @keyframes gift-float {
-          0%, 100% { transform: translateY(0) rotate(5deg) scale(1); }
-          50% { transform: translateY(-130px) rotate(-5deg) scale(1.1); }
+        .sparkle-4 {
+          bottom: 20px;
+          right: 20px;
+          animation-delay: 0.5s;
         }
-        
-        @keyframes sparkle-float {
-          0%, 100% { transform: translateY(0) scale(1); }
-          50% { transform: translateY(-170px) rotate(180deg) scale(1.2); }
+
+        /* New animation for sparkles */
+        @keyframes sparkle-pulse {
+          0%, 100% { transform: scale(1); opacity: 0.7; }
+          50% { transform: scale(1.3) rotate(20deg); opacity: 1; }
         }
         
         /* Responsive adjustments */
