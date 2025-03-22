@@ -516,10 +516,13 @@ export default function BirthdayWish() {
           <p class="birthday-wish">Wishing you a day filled with happiness and a year filled with joy.<br>Enjoy your day....</p>
           <p class="birthday-signature">Again, Happy Birthday!</p>
         </div>
-        <div class="balloons">
-          <div class="balloon balloon-1"></div>
-          <div class="balloon balloon-2"></div>
-          <div class="balloon balloon-3"></div>
+        <div class="card-decorations">
+          <div class="gift-box gift-box-1"></div>
+          <div class="sparkle sparkle-1">✨</div>
+          <div class="gift-box gift-box-2"></div>
+          <div class="sparkle sparkle-2">✨</div>
+          <div class="gift-box gift-box-3"></div>
+          <div class="sparkle sparkle-3">✨</div>
         </div>
       `;
       
@@ -1081,13 +1084,13 @@ export default function BirthdayWish() {
       card.addEventListener('click', () => {
         card.classList.toggle('flipped');
         
-        // Add balloons animation when card is opened
+        // Add gift box and sparkle animation when card is opened
         if (card.classList.contains('flipped')) {
           setTimeout(() => {
-            const balloons = document.querySelectorAll('.balloon');
-            balloons.forEach((balloon, index) => {
+            const decorations = document.querySelectorAll('.gift-box, .sparkle');
+            decorations.forEach((element, index) => {
               setTimeout(() => {
-                balloon.classList.add('float');
+                element.classList.add('float');
               }, index * 300);
             });
           }, 500);
@@ -1279,81 +1282,113 @@ export default function BirthdayWish() {
           transform: rotate(45deg);
         }
         
-        /* Balloons */
-        .balloons {
+        /* Card decorations */
+        .card-decorations {
           position: absolute;
           width: 100%;
           height: 100%;
           top: 0;
           left: 0;
+          pointer-events: none;
         }
         
-        .balloon {
+        /* Gift boxes */
+        .gift-box {
           position: absolute;
-          width: 60px;
-          height: 70px;
-          border-radius: 50%;
+          width: 50px;
+          height: 50px;
           bottom: -80px;
           opacity: 0;
-          transition: transform 3s ease, opacity 0.5s ease;
+          transition: transform 0.5s ease, opacity 0.5s ease;
+          background: linear-gradient(135deg, #ff9ecd, #ff6b99);
+          border-radius: 8px;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
-        .balloon.float {
+        .gift-box::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 0;
+          right: 0;
+          height: 10px;
+          background: rgba(255, 255, 255, 0.7);
+          transform: translateY(-50%);
+        }
+        
+        .gift-box::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 50%;
+          width: 10px;
+          background: rgba(255, 255, 255, 0.7);
+          transform: translateX(-50%);
+        }
+        
+        .gift-box.float {
           opacity: 1;
-          animation: floating 8s ease-in-out infinite;
+          animation: gift-float 6s ease-in-out infinite;
         }
         
-        .balloon-1 {
-          background: #ff3366;
+        .gift-box-1 {
+          background: linear-gradient(135deg, #ff9ecd, #ff6b99);
           left: 20%;
           animation-delay: 0.2s;
         }
         
-        .balloon-2 {
-          background: #7b2cff;
+        .gift-box-2 {
+          background: linear-gradient(135deg, #c9a8ff, #9932cc);
           left: 50%;
           animation-delay: 0.4s;
         }
         
-        .balloon-3 {
-          background: #4dff88;
+        .gift-box-3 {
+          background: linear-gradient(135deg, #a7ff83, #4dff88);
           right: 20%;
           animation-delay: 0.6s;
         }
         
-        .balloon::before {
-          content: '';
+        /* Sparkles */
+        .sparkle {
           position: absolute;
-          width: 10px;
-          height: 20px;
-          background: inherit;
-          bottom: -10px;
-          left: 50%;
-          transform: translateX(-50%) rotate(45deg);
-          border-bottom-left-radius: 20px;
-          border-bottom-right-radius: 20px;
+          font-size: 28px;
+          bottom: -50px;
+          opacity: 0;
+          transition: opacity 0.5s ease;
+          text-shadow: 0 0 10px white, 0 0 20px gold;
         }
         
-        .balloon::after {
-          content: '';
-          position: absolute;
-          width: 2px;
-          height: 50px;
-          background: rgba(255,255,255,0.7);
-          bottom: -60px;
-          left: 50%;
-          transform: translateX(-50%);
+        .sparkle.float {
+          opacity: 1;
+          animation: sparkle-float 7s ease-in-out infinite;
+        }
+        
+        .sparkle-1 {
+          left: 35%;
+          animation-delay: 0.3s;
+        }
+        
+        .sparkle-2 {
+          left: 65%;
+          animation-delay: 0.7s;
+        }
+        
+        .sparkle-3 {
+          left: 80%;
+          animation-delay: 1s;
         }
         
         /* Animations */
-        @keyframes flicker {
-          0% { transform: translateX(-50%) scale(1); }
-          100% { transform: translateX(-50%) scale(1.1); }
+        @keyframes gift-float {
+          0%, 100% { transform: translateY(0) rotate(5deg) scale(1); }
+          50% { transform: translateY(-130px) rotate(-5deg) scale(1.1); }
         }
         
-        @keyframes floating {
-          0%, 100% { transform: translateY(0) rotate(5deg); }
-          50% { transform: translateY(-150px) rotate(-5deg); }
+        @keyframes sparkle-float {
+          0%, 100% { transform: translateY(0) scale(1); }
+          50% { transform: translateY(-170px) rotate(180deg) scale(1.2); }
         }
         
         /* Responsive adjustments */
