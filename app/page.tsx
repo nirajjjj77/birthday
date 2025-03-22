@@ -568,9 +568,8 @@ export default function BirthdayWish() {
         continueButton.addEventListener('click', () => {
           // Remove everything except background
           cardContainer.remove();
-          const musicButton = document.getElementById('music-button');
-          if (musicButton) musicButton.remove();
-          continueButton.remove();
+          const continueButton = document.getElementById('continue-button');
+          if (continueButton) continueButton.remove();
 
           // Create and show the cake
           const cakeContainer = document.createElement('div');
@@ -613,14 +612,18 @@ export default function BirthdayWish() {
               perspective: 1000px;
               width: 300px;
               height: 300px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
             }
 
             .cake {
-              position: relative;
+              position: absolute;
               width: 250px;
               height: 200px;
               transform-style: preserve-3d;
               animation: cakeAppear 1s ease-out forwards;
+              transform: translate(-50%, -50%);
             }
 
             @keyframes cakeAppear {
