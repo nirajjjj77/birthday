@@ -764,7 +764,7 @@ export default function BirthdayWish() {
               width: 10px;
               height: 30px;
               background: linear-gradient(135deg, #fff5cc, #ffeb99);
-              bottom: 110px;
+              bottom: 150px;
               left: 50%;
               transform: translateX(-50%);
               border-radius: 5px;
