@@ -600,6 +600,7 @@ export default function BirthdayWish() {
               <div class="stars"></div>
               <div class="stars"></div>
             </div>
+            <div class="wish-text">Make a Wish 🧙🏻‍♂️🌟</div>
           `;
 
           // Add cake styles
@@ -1063,6 +1064,65 @@ export default function BirthdayWish() {
               40% { transform: scale(1); opacity: 0.8; }
               70% { transform: scale(1.1); opacity: 0.9; }
               100% { transform: scale(0); opacity: 0; }
+            }
+
+            /* Wish text styling */
+            .wish-text {
+              position: absolute;
+              width: 100%;
+              text-align: center;
+              bottom: -80px;
+              left: 0;
+              font-family: 'Brush Script MT', 'Comic Sans MS', cursive;
+              font-size: 2.5rem;
+              color: #ffffff;
+              text-shadow: 
+                0 0 10px #ff69b4,
+                0 0 20px #9932cc,
+                0 0 30px #8a2be2;
+              opacity: 0;
+              transform: translateY(20px);
+              animation: fadeInWish 1.5s ease-in-out forwards;
+              animation-delay: 5s; /* Will appear 5 seconds after cake appears */
+            }
+            
+            /* Add glowing effect to the wish text */
+            .wish-text::after {
+              content: '';
+              position: absolute;
+              top: -10px;
+              left: 0;
+              width: 100%;
+              height: calc(100% + 20px);
+              background: radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+              z-index: -1;
+              opacity: 0;
+              animation: glowPulse 3s ease-in-out infinite;
+              animation-delay: 5s;
+            }
+            
+            /* Fade in animation for the wish text */
+            @keyframes fadeInWish {
+              0% {
+                opacity: 0;
+                transform: translateY(20px);
+              }
+              100% {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+            
+            /* Subtle glow pulse animation */
+            @keyframes glowPulse {
+              0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+              }
+              50% {
+                opacity: 0.7;
+                transform: scale(1.1);
+              }
             }
           `;
       
