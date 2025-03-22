@@ -1073,7 +1073,8 @@ export default function BirthdayWish() {
               text-align: center;
               bottom: -80px;
               left: 0;
-              font-family: 'Brush Script MT', 'Comic Sans MS', cursive;
+              font-family: 'Montserrat', 'Arial', sans-serif;
+              font-weight: bold;
               font-size: 2.5rem;
               color: #ffffff;
               text-shadow: 
@@ -1105,11 +1106,11 @@ export default function BirthdayWish() {
             @keyframes fadeInWish {
               0% {
                 opacity: 0;
-                transform: translateY(20px);
+                clip-path: inset(0 100% 0 0);
               }
               100% {
                 opacity: 1;
-                transform: translateY(0);
+                clip-path: inset(0 0 0 0);
               }
             }
             
