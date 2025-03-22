@@ -568,8 +568,7 @@ export default function BirthdayWish() {
         continueButton.addEventListener('click', () => {
           // Remove everything except background
           cardContainer.remove();
-          const continueButton = document.getElementById('continue-button');
-          if (continueButton) continueButton.remove();
+          continueButton.remove();
 
           // Create and show the cake
           const cakeContainer = document.createElement('div');
