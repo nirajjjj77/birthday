@@ -1301,7 +1301,7 @@ export default function BirthdayWish() {
           opacity: 0;
           transition: transform 0.5s ease, opacity 0.5s ease;
           background: linear-gradient(135deg, #ff9ecd, #ff6b99);
-          border-radius: 8px;
+          border-radius: 6px;
           box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
@@ -1309,22 +1309,53 @@ export default function BirthdayWish() {
           content: '';
           position: absolute;
           top: 50%;
-          left: 0;
-          right: 0;
+          left: -5px;
+          right: -5px;
           height: 10px;
-          background: rgba(255, 255, 255, 0.7);
+          background: #1e6fdf;
           transform: translateY(-50%);
+          z-index: 2;
         }
         
         .gift-box::after {
           content: '';
           position: absolute;
-          top: 0;
-          bottom: 0;
+          top: -5px;
+          bottom: -5px;
           left: 50%;
           width: 10px;
-          background: rgba(255, 255, 255, 0.7);
+          background: #1e6fdf;
           transform: translateX(-50%);
+          z-index: 1;
+        }
+
+        /* Add bow on top */
+        .gift-box-1::before, .gift-box-2::before, .gift-box-3::before {
+          content: '';
+          position: absolute;
+          width: 20px;
+          height: 12px;
+          background: #1e6fdf; /* Blue bow color */
+          top: -10px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-radius: 50% 50% 0 0;
+          z-index: 3;
+          box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Bow loops */
+        .gift-box-1::after, .gift-box-2::after, .gift-box-3::after {
+          content: '';
+          position: absolute;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #1e6fdf; /* Blue bow color */
+          top: -5px;
+          left: 40%;
+          box-shadow: 10px 0 0 #1e6fdf;
+          z-index: 4;
         }
         
         .gift-box.float {
