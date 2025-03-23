@@ -1114,7 +1114,7 @@ export default function BirthdayWish() {
               text-align: center;
               bottom: -80px;
               left: 0;
-              font-family: 'Roboto', 'Arial', sans-serif;
+              font-family: 'Brush Script MT', 'Pacifico', 'Dancing Script', 'Satisfy', cursive;
               font-weight: bold;
               font-size: 2.5rem;
               color: #ffffff;
