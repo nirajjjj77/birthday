@@ -1472,19 +1472,19 @@ export default function BirthdayWish() {
        .sparkle-1 {
           top: 20px;
           left: 20px;
-          animation-delay: 0.3s;
+          animation-delay: 0.5s;
         }
 
         .sparkle-2 {
           top: 20px;
           right: 20px;
-          animation-delay: 0.7s;
+          animation-delay: 0.5s;
         }
         
         .sparkle-3 {
           bottom: 20px;
           left: 20px;
-          animation-delay: 1s;
+          animation-delay: 0.5s;
         }
         
         .sparkle-4 {
