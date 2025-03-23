@@ -554,16 +554,29 @@ export default function BirthdayWish() {
         continueButton.style.transition = 'all 0.3s ease';
         continueButton.style.zIndex = '1000';
 
+        // Check if it's a mobile device
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  
+        // Apply mobile-specific styles
+        if (isMobile) {
+          continueButton.style.padding = '8px 16px';
+          continueButton.style.fontSize = '14px';
+          continueButton.style.bottom = '15px';
+          continueButton.style.right = '15px';
+        }
+
         // Add hover effects
-        continueButton.onmouseenter = () => {
-          continueButton.style.transform = 'scale(1.05)';
-          continueButton.style.boxShadow = '0 6px 16px rgba(0,0,0,0.4)';
-        };
+        if (!('ontouchstart' in window)) {
+          continueButton.onmouseenter = () => {
+            continueButton.style.transform = 'scale(1.05)';
+            continueButton.style.boxShadow = '0 6px 16px rgba(0,0,0,0.4)';
+          };
     
-        continueButton.onmouseleave = () => {
-          continueButton.style.transform = 'scale(1)';
-          continueButton.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
-        };
+          continueButton.onmouseleave = () => {
+            continueButton.style.transform = 'scale(1)';
+            continueButton.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+          };
+        }
 
         // Add click handler for the continue button
         continueButton.addEventListener('click', () => {
@@ -1134,6 +1147,23 @@ export default function BirthdayWish() {
 
           // Add cake to document
           document.body.appendChild(cakeContainer);
+        });
+
+        // Handle window resize to adjust styles dynamically
+        window.addEventListener('resize', () => {
+          const isMobileNow = window.matchMedia('(max-width: 768px)').matches;
+    
+          if (isMobileNow) {
+            continueButton.style.padding = '8px 16px';
+            continueButton.style.fontSize = '14px';
+            continueButton.style.bottom = '15px';
+            continueButton.style.right = '15px';
+          } else {
+            continueButton.style.padding = '12px 24px';
+            continueButton.style.fontSize = '16px';
+            continueButton.style.bottom = '20px';
+            continueButton.style.right = '20px';
+          }
         });
 
         document.body.appendChild(continueButton);
