@@ -1166,6 +1166,52 @@ export default function BirthdayWish() {
                 transform: scale(1.1);
               }
             }
+
+            /* Responsive adjustments for smaller screens */
+            @media (max-width: 768px) {
+              .cake-container {
+                width: 250px;
+                height: 250px;
+                transform: translate(-50%, -50%) scale(0.85);
+              }
+              
+              .cake {
+                width: 200px;
+                height: 160px;
+              }
+              
+              .plate {
+                width: 240px;
+                left: -20px;
+              }
+              
+              .cake-background {
+                width: 300px;
+                height: 300px;
+              }
+              
+              .wish-text {
+                font-size: 1.8rem;
+                bottom: -60px;
+              }
+            }
+            
+            /* Even smaller devices */
+            @media (max-width: 480px) {
+              .cake-container {
+                transform: translate(-50%, -50%) scale(0.7);
+              }
+              
+              .cake-background {
+                width: 250px;
+                height: 250px;
+              }
+              
+              .wish-text {
+                font-size: 1.5rem;
+                bottom: -50px;
+              }
+            }
           `;
       
           // Add styles to document
