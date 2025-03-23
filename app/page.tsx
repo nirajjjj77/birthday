@@ -43,6 +43,17 @@ export default function BirthdayWish() {
     musicButton.style.cursor = 'pointer';
     musicButton.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
     musicButton.style.transition = 'all 0.3s ease';
+
+    // Check if it's a mobile device
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+    // Apply mobile-specific styles
+    if (isMobile) {
+      musicButton.style.padding = '8px 16px';
+      musicButton.style.fontSize = '14px';
+      musicButton.style.bottom = '15px';
+      musicButton.style.left = '15px';
+    }
     
     // Add hover effect
     musicButton.onmouseenter = () => {
@@ -67,6 +78,23 @@ export default function BirthdayWish() {
           musicButton.innerHTML = "⏸ Pause Music";
         }
         isPlaying = !isPlaying; // Toggle play state
+      }
+    });
+
+    // Handle window resize to adjust styles dynamically
+    window.addEventListener('resize', () => {
+      const isMobileNow = window.matchMedia('(max-width: 768px)').matches;
+  
+      if (isMobileNow) {
+        musicButton.style.padding = '8px 16px';
+        musicButton.style.fontSize = '14px';
+        musicButton.style.bottom = '15px';
+        musicButton.style.left = '15px';
+      } else {
+        musicButton.style.padding = '12px 20px';
+        musicButton.style.fontSize = '16px';
+        musicButton.style.bottom = '20px';
+        musicButton.style.left = '20px';
       }
     });
     
