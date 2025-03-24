@@ -1228,6 +1228,9 @@ export default function BirthdayWish() {
             if (wishText) {
               // Cast to HTMLElement to access style property
               const wishTextElement = wishText as HTMLElement;
+
+              // Add transition property before changing opacity
+              wishTextElement.style.transition = 'opacity 0.5s ease-in-out';
               wishTextElement.style.opacity = '0';
     
               // After fade out, change text and fade in again
