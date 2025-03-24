@@ -1221,6 +1221,22 @@ export default function BirthdayWish() {
 
           // Add cake to document
           document.body.appendChild(cakeContainer);
+
+          // Change wish text after 5 seconds
+          setTimeout(() => {
+            const wishText = document.querySelector('.wish-text');
+            if (wishText) {
+              // Cast to HTMLElement to access style property
+              const wishTextElement = wishText as HTMLElement;
+              wishTextElement.style.opacity = '0';
+    
+              // After fade out, change text and fade in again
+              setTimeout(() => {
+                wishTextElement.textContent = "Let's blow out the candle now. 💨";
+                wishTextElement.style.opacity = '1';
+              }, 500); // Half a second to fade out
+            }
+          }, 5000); // 5 seconds
         });
 
         // Handle window resize to adjust styles dynamically
