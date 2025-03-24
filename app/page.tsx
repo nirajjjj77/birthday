@@ -1236,6 +1236,10 @@ export default function BirthdayWish() {
               // After fade out, change text and fade in again
               setTimeout(() => {
                 wishTextElement.textContent = "Let's blow out the candle now. 💨";
+
+                // Force a reflow before changing opacity
+                void wishTextElement.offsetWidth;
+
                 wishTextElement.style.opacity = '1';
               }, 500); // Half a second to fade out
             }
