@@ -1236,7 +1236,7 @@ export default function BirthdayWish() {
                 wishTextElement.style.opacity = '1';
               }, 500); // Half a second to fade out
             }
-          }, 5000); // 5 seconds
+          }, 10000); // 10 seconds
         });
 
         // Handle window resize to adjust styles dynamically
