@@ -1212,6 +1212,18 @@ export default function BirthdayWish() {
                 bottom: -50px;
               }
             }
+
+            .fade-transition {
+              transition: opacity 0.5s ease-in-out;
+            }
+
+            .fade-out {
+              opacity: 0;
+            }
+
+            .fade-in {
+              opacity: 1;
+            }
           `;
       
           // Add styles to document
@@ -1222,26 +1234,30 @@ export default function BirthdayWish() {
           // Add cake to document
           document.body.appendChild(cakeContainer);
 
-          // Change wish text after 5 seconds
+          // Change wish text after 10 seconds
           setTimeout(() => {
             const wishText = document.querySelector('.wish-text');
             if (wishText) {
               // Cast to HTMLElement to access style property
               const wishTextElement = wishText as HTMLElement;
-
-              // Add transition property before changing opacity
-              wishTextElement.style.transition = 'opacity 0.5s ease-in-out';
-              wishTextElement.style.opacity = '0';
-    
+              
+              // Add transition class
+              wishTextElement.classList.add('fade-transition');
+              
+              // Fade out
+              wishTextElement.classList.add('fade-out');
+              wishTextElement.classList.remove('fade-in');
+              
               // After fade out, change text and fade in again
               setTimeout(() => {
                 wishTextElement.textContent = "Let's blow out the candle now. 💨";
-
-                // Force a reflow before changing opacity
-                void wishTextElement.offsetWidth;
-
-                wishTextElement.style.opacity = '1';
-              }, 2000); // Half a second to fade out
+                
+                // Small delay to ensure the DOM has updated
+                setTimeout(() => {
+                  wishTextElement.classList.remove('fade-out');
+                  wishTextElement.classList.add('fade-in');
+                }, 50);
+              }, 500); // Half a second to fade out
             }
           }, 10000); // 10 seconds
         });
