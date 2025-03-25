@@ -625,6 +625,7 @@ export default function BirthdayWish() {
                 <div class="candle">
                   <div class="flame"></div>
                 </div>
+                <div class="smoke"></div>
               </div>
               <div class="cake-sparkles"></div>
               <div class="cake-background">
@@ -867,6 +868,30 @@ export default function BirthdayWish() {
               top: 20%;
               left: 20%;
               filter: blur(2px);
+            }
+
+            .smoke {
+              position: absolute;
+              bottom: 40px; /* Adjust position above candle */
+              left: 50%;
+              width: 10px;
+              height: 10px;
+              background: rgba(200, 200, 200, 0.6);
+              border-radius: 50%;
+              opacity: 0;
+              transform: translateX(-50%);
+              pointer-events: none;
+            }
+            
+            @keyframes smoke-rise {
+              0% {
+                opacity: 0.8;
+                transform: translateX(-50%) translateY(0) scale(1);
+              }
+              100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-50px) scale(1.5);
+              }
             }
 
             .cake-sparkles {
@@ -1260,6 +1285,26 @@ export default function BirthdayWish() {
               }, 500); // Half a second to fade out
             }
           }, 10000); // 10 seconds
+
+          setTimeout(() => {
+            const flame = document.querySelector('.flame') as HTMLElement;
+            if (flame) {
+              flame.style.transition = "opacity 1.5s ease-out, transform 0.5s ease-in-out";
+              flame.style.opacity = "0";  // Flame fade-out
+              flame.style.transform = "scale(1.3) translateY(-8px)"; // Puff effect
+          
+              // Optionally, remove flame after fade out
+              setTimeout(() => {
+                flame.style.display = "none"; 
+              }, 2000);
+            }
+
+            // 🚀 Smoke animation trigger yahan add kiya! (Neeche flame ke)
+            const smoke = document.querySelector('.smoke') as HTMLElement;
+            if (smoke) {
+              smoke.style.animation = "smoke-rise 2s ease-out forwards";
+            }
+          }, 13000); // 3 seconds after text update          
         });
 
         // Handle window resize to adjust styles dynamically
