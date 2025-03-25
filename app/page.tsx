@@ -625,7 +625,7 @@ export default function BirthdayWish() {
                 <div class="candle">
                   <div class="flame"></div>
                 </div>
-                <div class="smoke"></div>
+                <div class="smoke">💨</div>
               </div>
               <div class="cake-sparkles"></div>
               <div class="cake-background">
@@ -874,18 +874,16 @@ export default function BirthdayWish() {
               position: absolute;
               bottom: 40px; /* Adjust position above candle */
               left: 50%;
-              width: 10px;
-              height: 10px;
-              background: rgba(200, 200, 200, 0.6);
-              border-radius: 50%;
+              font-size: 20px;
               opacity: 0;
-              transform: translateX(-50%);
+              transform: translateX(-50%) scale(1);
+              transition: opacity 0.5s ease-out, transform 2s ease-in-out;
               pointer-events: none;
             }
             
             @keyframes smoke-rise {
               0% {
-                opacity: 0.8;
+                opacity: 1;
                 transform: translateX(-50%) translateY(0) scale(1);
               }
               100% {
@@ -1302,6 +1300,7 @@ export default function BirthdayWish() {
             // 🚀 Smoke animation trigger yahan add kiya! (Neeche flame ke)
             const smoke = document.querySelector('.smoke') as HTMLElement;
             if (smoke) {
+              smoke.style.opacity = "1";  // Show smoke
               smoke.style.animation = "smoke-rise 2s ease-out forwards";
             }
           }, 13000); // 3 seconds after text update          
