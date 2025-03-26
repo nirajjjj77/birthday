@@ -1608,7 +1608,7 @@ export default function BirthdayWish() {
                     setTimeout(() => {
                       const message = document.createElement("div");
                       message.className = "gift-message";
-                      message.innerHTML = "🎉 Surprise! Wishing you an amazing year ahead! ✨";
+                      message.innerHTML = "🎉 hello! I hope you like this...keep smiling..Happy birthday! ✨";
                 
                       document.body.appendChild(message); // Add message to the page
                 
