@@ -622,7 +622,8 @@ export default function BirthdayWish() {
                 <div class="cake-middle"></div>
                 <div class="cake-bottom"></div>
                 <div class="plate"></div>
-                <div class="cake-slice"></div>
+                <div class="cake-slice hidden"></div>
+                <div class="knife"></div>
                 <div class="candle">
                   <div class="flame"></div>
                 </div>
@@ -804,6 +805,60 @@ export default function BirthdayWish() {
               left: 5%;
               border-radius: 50%;
               background: linear-gradient(135deg, transparent, rgba(255,255,255,0.5));
+            }
+
+            .cake-slice {
+              position: absolute;
+              width: 50px;
+              height: 70px;
+              background: linear-gradient(to bottom, #f4a261 30%, #d67b40 60%, #8b4513 100%);
+              clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
+              bottom: 20px;
+              left: 50%;
+              transform: translateX(-50%) scale(0);
+              transition: transform 1s ease-in-out, opacity 0.5s ease-in-out;
+            }
+          
+            /* Hidden at Start */
+            .hidden {
+              opacity: 0;
+              pointer-events: none;
+            }
+          
+            /* Slice Appears and Moves */
+            .slice-move {
+              transform: translateX(150px) translateY(-20px) scale(1);
+              opacity: 1;
+            }
+          
+            /* Slice Disappears */
+            .slice-disappear {
+              transform: translateX(300px) translateY(-50px);
+              opacity: 0;
+            }
+                    
+            .knife {
+              position: absolute;
+              width: 100px;
+              height: 10px;
+              background: silver;
+              border-radius: 2px;
+              top: -50px; /* Start off-screen */
+              left: 50%;
+              transform: rotate(0deg);
+              transition: transform 1.5s ease-in-out;
+            }
+          
+            /* Knife Handle */
+            .knife::after {
+              content: "";
+              position: absolute;
+              width: 40px;
+              height: 15px;
+              background: black;
+              border-radius: 5px;
+              left: -10px;
+              top: -3px;
             }
 
             .candle {
@@ -1263,9 +1318,9 @@ export default function BirthdayWish() {
               clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%); /* Slice shape */
             }
           
-          .slice-move {
+            .slice-move {
               transform: translateX(40px) translateY(-10px) rotate(5deg);
-          }
+            }
           `;
       
           // Add styles to document
@@ -1325,32 +1380,34 @@ export default function BirthdayWish() {
           }, 13000); // 3 seconds after text update
 
           setTimeout(() => {
-            // Create the knife
-            const knife = document.createElement("div");
-            knife.className = "knife";
-            document.body.appendChild(knife);
+            // Properly cast elements to `HTMLElement`
+            const knife = document.querySelector(".knife") as HTMLElement | null;
+            const slice = document.querySelector(".cake-slice") as HTMLElement | null;
 
-            // Position knife initially off-screen
-            knife.style.position = "absolute";
-            knife.style.width = "100px";
-            knife.style.height = "10px";
-            knife.style.background = "silver";
-            knife.style.borderRadius = "5px";
-            knife.style.left = "-100px";  // Start from outside screen
-            knife.style.top = "300px";    // Adjust as per your cake's height
-            knife.style.transition = "transform 1s ease-in-out";
-        
-            // Move knife to the cake
+            if (!knife || !slice) {
+              console.error("Knife or Cake Slice element not found!");
+              return;
+            }
+
+            // Move knife to cake position
             setTimeout(() => {
-                knife.style.transform = "translateX(400px) translateY(50px) rotate(-20deg)";
+              if (knife) knife.style.transform = "translateX(150px) translateY(80px) rotate(-45deg)";
             }, 1000);
-        
-            // Knife cuts the cake
+
+            // Reveal slice & cut
             setTimeout(() => {
-                knife.style.transform = "translateX(420px) translateY(70px) rotate(0deg)";
-                document.querySelector(".cake-slice")?.classList.add("slice-move");
-            }, 2000);
-          }, 15000); // 2 seconds after candle blowout                  
+              if (slice) {
+                  slice.classList.remove("hidden");
+                  slice.classList.add("slice-move");
+              }
+            }, 1800);
+
+            // Make slice disappear after sliding
+            setTimeout(() => {
+              if (slice) slice.classList.add("slice-disappear");
+            }, 3000);
+
+          }, 15000); // After candle blowout                
         });
 
         // Handle window resize to adjust styles dynamically
