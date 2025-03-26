@@ -622,6 +622,7 @@ export default function BirthdayWish() {
                 <div class="cake-middle"></div>
                 <div class="cake-bottom"></div>
                 <div class="plate"></div>
+                <div className="cake-slice"></div>
                 <div class="candle">
                   <div class="flame"></div>
                 </div>
@@ -1250,11 +1251,10 @@ export default function BirthdayWish() {
 
             .knife {
               position: absolute;
-              width: 60px;
+              width: 80px;
               height: 10px;
               background: silver;
               border-radius: 5px;
-              transform: rotate(45deg);
               left: -50px;
               top: 50px;
               transition: transform 1s ease-in-out;
@@ -1280,6 +1280,10 @@ export default function BirthdayWish() {
               left: 50%;
               transform: translateX(-50%);
               transition: transform 1s ease-in-out;
+            }
+
+            .slice-move {
+              transform: translateX(30px) translateY(-10px) rotate(5deg);
             }
           `;
       
@@ -1324,6 +1328,34 @@ export default function BirthdayWish() {
               flame.style.transition = "opacity 1.5s ease-out, transform 0.5s ease-in-out";
               flame.style.opacity = "0";  // Flame fade-out
               flame.style.transform = "scale(1.3) translateY(-8px)"; // Puff effect
+
+              setTimeout(() => {
+                const knife = document.createElement("div");
+                knife.className = "knife";
+                document.body.appendChild(knife);
+             
+                // Position knife initially off-screen
+                knife.style.position = "absolute";
+                knife.style.width = "100px";
+                knife.style.height = "10px";
+                knife.style.background = "silver";
+                knife.style.borderRadius = "5px";
+                knife.style.left = "-100px";  // Start from outside screen
+                knife.style.top = "300px";    // Adjust as per your cake's height
+                knife.style.transition = "transform 1s ease-in-out";
+             
+                // Move knife to the cake
+                setTimeout(() => {
+                   knife.style.transform = "translateX(400px) translateY(50px) rotate(-20deg)";
+                }, 1000);
+             
+                // Knife cuts the cake
+                setTimeout(() => {
+                   knife.style.transform = "translateX(420px) translateY(70px) rotate(0deg)";
+                   document.querySelector(".cake-slice")?.classList.add("slice-move");
+                }, 2000);
+             }, 1000);
+             
           
               // Optionally, remove flame after fade out
               setTimeout(() => {
