@@ -1445,6 +1445,44 @@ export default function BirthdayWish() {
               animation: fireflies 2s infinite ease-in-out alternate;
               box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
             }
+
+            .gift-message {
+              position: fixed;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              font-size: 24px;
+              color: white;
+              background: linear-gradient(135deg, #ff9dce, #ff5e98);
+              padding: 20px 30px;
+              border-radius: 10px;
+              text-align: center;
+              box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+              opacity: 0;
+              animation: fadeIn 1.5s ease-in-out forwards, glow 1.5s infinite alternate;
+            }
+            
+            /* Smooth fade-in effect */
+            @keyframes fadeIn {
+              0% { opacity: 0; transform: translate(-50%, -55%); }
+              100% { opacity: 1; transform: translate(-50%, -50%); }
+            }
+            
+            /* Glow effect */
+            @keyframes glow {
+              0% { box-shadow: 0 0 10px rgba(255, 100, 150, 0.5); }
+              100% { box-shadow: 0 0 20px rgba(255, 100, 150, 0.8); }
+            }
+            
+            /* Fade out after some time */
+              .fade-out {
+              animation: fadeOut 1s ease-in-out forwards;
+            }
+            
+            @keyframes fadeOut {
+              0% { opacity: 1; }
+              100% { opacity: 0; }
+            }
           `;
       
           // Add styles to document
@@ -1562,17 +1600,28 @@ export default function BirthdayWish() {
                   document.querySelector(".gift-box")?.appendChild(firefly);
                 }                
             
-                // Click event for opening the box
                 giftBox.addEventListener("click", () => {
-                  if (!giftBox.classList.contains("open")) { // Ensure it only opens once
+                  if (!giftBox.classList.contains("open")) {
                     giftBox.classList.add("open");
                 
+                    // Wait for the lid animation to finish, then show the message
                     setTimeout(() => {
-                      alert("🎉 Hello there! hope you like it..keep smiling and growing 🎁");
-                      launchConfetti(); // Start confetti after the message
-                    }, 1000);
+                      const message = document.createElement("div");
+                      message.className = "gift-message";
+                      message.innerHTML = "🎉 Surprise! Wishing you an amazing year ahead! ✨";
+                
+                      document.body.appendChild(message); // Add message to the page
+                
+                      // Remove message after some time
+                      setTimeout(() => {
+                        message.classList.add("fade-out"); // Add fade-out effect
+                        setTimeout(() => message.remove(), 1000); // Remove element after fade-out
+                      }, 5000); // Message stays for 5 seconds
+                    }, 1000); // Delay so it appears after the box opens
+                
+                    launchConfetti(); // Keep confetti animation
                   }
-                });
+                });                
             
               }, 2000); // Delay to show gift box after cake is removed
             }, 3000);            
