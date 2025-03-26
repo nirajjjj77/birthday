@@ -1324,11 +1324,11 @@ export default function BirthdayWish() {
 
             .gift-box {
               position: fixed;
-              bottom: 20%;
+              top: 50%;
               left: 50%;
               transform: translateX(-50%);
-              width: 120px;
-              height: 120px;
+              width: 140px;
+              height: 140px;
               background: linear-gradient(135deg, #ff6b99, #ff3366);
               border-radius: 10px;
               display: flex;
@@ -1389,7 +1389,61 @@ export default function BirthdayWish() {
             }
             
             .gift-box.open .lid {
-              transform: translateY(-50px) rotate(-10deg);
+              transform: translateY(-100px) rotate(-30deg) scale(1.2);
+              opacity: 0;
+              transition: transform 0.6s cubic-bezier(0.3, 1.5, 0.5, 1);
+            }
+
+            @keyframes bounce {
+              0%, 100% { transform: translate(-50%, -50%) scale(1); }
+              50% { transform: translate(-50%, -52%) scale(1.1); }
+            }
+
+            .gift-box {
+              animation: bounce 1s ease-in-out infinite;
+            }
+
+            @keyframes glow {
+              0% { box-shadow: 0 0 10px rgba(255, 100, 150, 0.5); }
+              50% { box-shadow: 0 0 20px rgba(255, 100, 150, 0.8); }
+              100% { box-shadow: 0 0 10px rgba(255, 100, 150, 0.5); }
+            }
+            
+            .gift-box {
+              animation: glow 2s infinite alternate;
+              transition: transform 0.3s ease;
+            }
+            
+            .gift-box:hover {
+              transform: translate(-50%, -50%) scale(1.05);
+            }
+
+            @keyframes shake {
+              0% { transform: rotate(0deg); }
+              25% { transform: rotate(-5deg); }
+              50% { transform: rotate(5deg); }
+              75% { transform: rotate(-5deg); }
+              100% { transform: rotate(0deg); }
+            }
+            
+            .gift-box {
+              animation: glow 2s infinite alternate, shake 0.4s infinite ease-in-out;
+            }
+
+            @keyframes fireflies {
+              0% { transform: translateY(0px) scale(1); opacity: 0.8; }
+              50% { transform: translateY(-20px) scale(1.2); opacity: 1; }
+              100% { transform: translateY(0px) scale(1); opacity: 0.8; }
+            }
+            
+            .firefly {
+              position: absolute;
+              width: 8px;
+              height: 8px;
+              background: rgba(255, 255, 255, 0.8);
+              border-radius: 50%;
+              animation: fireflies 2s infinite ease-in-out alternate;
+              box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
             }
           `;
       
@@ -1499,19 +1553,25 @@ export default function BirthdayWish() {
                 `;
             
                 document.body.appendChild(giftBox);
-            
-                // Open the gift box after a delay
-                setTimeout(() => {
-                  giftBox.classList.add("open");
-                  launchConfetti(); // Trigger confetti animation
-                }, 2000);
+
+                for (let i = 0; i < 10; i++) {
+                  const firefly = document.createElement("div");
+                  firefly.className = "firefly";
+                  firefly.style.left = `${Math.random() * 100 + 40}px`;
+                  firefly.style.top = `${Math.random() * 100 + 40}px`;
+                  document.querySelector(".gift-box")?.appendChild(firefly);
+                }                
             
                 // Click event for opening the box
                 giftBox.addEventListener("click", () => {
-                  giftBox.classList.add("open");
-                  setTimeout(() => {
-                    alert("🎉 Hello there! janam din ki dher sari subhkamnaye...kuch samgh nahi aa raha kya bole....bharat mata ki jay...keep smiling 🎁");
-                  }, 500);
+                  if (!giftBox.classList.contains("open")) { // Ensure it only opens once
+                    giftBox.classList.add("open");
+                
+                    setTimeout(() => {
+                      alert("🎉 Hello there! hope you like it..keep smiling and growing 🎁");
+                      launchConfetti(); // Start confetti after the message
+                    }, 1000);
+                  }
                 });
             
               }, 2000); // Delay to show gift box after cake is removed
