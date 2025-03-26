@@ -873,7 +873,7 @@ export default function BirthdayWish() {
             .smoke {
               position: absolute;
               bottom: 185px; /* Adjust position above candle */
-              left: 47%;
+              left: 40%;
               font-size: 20px;
               opacity: 0;
               transform: translateX(-50%) scale(1);
@@ -888,7 +888,7 @@ export default function BirthdayWish() {
               }
               100% {
                 opacity: 0;
-                transform: translateX(-50%) translateY(-50px) scale(1.5);
+                transform: translateX(100px) translateY(-50px) scale(1.5);
               }
             }
 
