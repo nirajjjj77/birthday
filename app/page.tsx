@@ -1247,6 +1247,40 @@ export default function BirthdayWish() {
             .fade-in {
               opacity: 1;
             }
+
+            .knife {
+              position: absolute;
+              width: 60px;
+              height: 10px;
+              background: silver;
+              border-radius: 5px;
+              transform: rotate(45deg);
+              left: -50px;
+              top: 50px;
+              transition: transform 1s ease-in-out;
+            }
+            
+            .knife-handle {
+              position: absolute;
+              width: 20px;
+              height: 30px;
+              background: brown;
+              border-radius: 5px;
+              left: -10px;
+              bottom: -10px;
+            }
+
+            .cake-slice {
+              position: absolute;
+              width: 40%;
+              height: 60px;
+              background: #ff82b2;
+              border-radius: 8px;
+              bottom: 0;
+              left: 50%;
+              transform: translateX(-50%);
+              transition: transform 1s ease-in-out;
+            }
           `;
       
           // Add styles to document
@@ -1303,7 +1337,43 @@ export default function BirthdayWish() {
               smoke.style.opacity = "1";  // Show smoke
               smoke.style.animation = "smoke-rise 2s ease-out forwards";
             }
-          }, 13000); // 3 seconds after text update          
+          }, 13000); // 3 seconds after text update  
+          
+          setTimeout(() => {
+            // Create the knife
+            const knife = document.createElement("div");
+            knife.className = "knife";
+            const knifeHandle = document.createElement("div");
+            knifeHandle.className = "knife-handle";
+            knife.appendChild(knifeHandle);
+            document.body.appendChild(knife);
+          
+            // Move the knife toward the cake
+            setTimeout(() => {
+              knife.style.transform = "translateX(150px) translateY(50px) rotate(-10deg)";
+            }, 2000);
+          
+            setTimeout(() => {
+              knife.style.transform = "translateX(150px) translateY(100px) rotate(0deg)";
+            }, 3000);
+          
+            setTimeout(() => {
+              // Simulate cake slice effect
+              const cakeMiddle = document.querySelector('.cake-middle') as HTMLElement;
+              if (cakeMiddle) {
+                cakeMiddle.style.clipPath = "polygon(0 0, 100% 0, 100% 70%, 0% 70%)";
+              }
+            }, 4000);
+          
+            // Create the sliced cake piece
+            const cakeSlice = document.createElement("div");
+            cakeSlice.className = "cake-slice";
+            document.body.appendChild(cakeSlice);
+          
+            setTimeout(() => {
+              cakeSlice.style.transform = "translateX(40px) translateY(-10px) rotate(5deg)";
+            }, 4500);
+          }, 14000); // 1 second after candle blowout          
         });
 
         // Handle window resize to adjust styles dynamically
