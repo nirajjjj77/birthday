@@ -622,7 +622,7 @@ export default function BirthdayWish() {
                 <div class="cake-middle"></div>
                 <div class="cake-bottom"></div>
                 <div class="plate"></div>
-                <div className="cake-slice"></div>
+                <div class="cake-slice"></div>
                 <div class="candle">
                   <div class="flame"></div>
                 </div>
@@ -1249,42 +1249,23 @@ export default function BirthdayWish() {
               opacity: 1;
             }
 
-            .knife {
-              position: absolute;
-              width: 80px;
-              height: 10px;
-              background: silver;
-              border-radius: 5px;
-              left: -50px;
-              top: 50px;
-              transition: transform 1s ease-in-out;
-            }
-            
-            .knife-handle {
-              position: absolute;
-              width: 20px;
-              height: 30px;
-              background: brown;
-              border-radius: 5px;
-              left: -10px;
-              bottom: -10px;
-            }
-
             .cake-slice {
               position: absolute;
-              width: 40%;
-              height: 60px;
+              width: 40px;
+              height: 50px;
               background: #ff82b2;
-              border-radius: 8px;
-              bottom: 0;
+              border-radius: 5px;
+              bottom: 10px;
               left: 50%;
-              transform: translateX(-50%);
+              transform: translateX(-50%) rotate(0deg);
               transition: transform 1s ease-in-out;
+              box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+              clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%); /* Slice shape */
             }
-
-            .slice-move {
-              transform: translateX(30px) translateY(-10px) rotate(5deg);
-            }
+          
+          .slice-move {
+              transform: translateX(40px) translateY(-10px) rotate(5deg);
+          }
           `;
       
           // Add styles to document
@@ -1328,35 +1309,7 @@ export default function BirthdayWish() {
               flame.style.transition = "opacity 1.5s ease-out, transform 0.5s ease-in-out";
               flame.style.opacity = "0";  // Flame fade-out
               flame.style.transform = "scale(1.3) translateY(-8px)"; // Puff effect
-
-              setTimeout(() => {
-                const knife = document.createElement("div");
-                knife.className = "knife";
-                document.body.appendChild(knife);
-             
-                // Position knife initially off-screen
-                knife.style.position = "absolute";
-                knife.style.width = "100px";
-                knife.style.height = "10px";
-                knife.style.background = "silver";
-                knife.style.borderRadius = "5px";
-                knife.style.left = "-100px";  // Start from outside screen
-                knife.style.top = "300px";    // Adjust as per your cake's height
-                knife.style.transition = "transform 1s ease-in-out";
-             
-                // Move knife to the cake
-                setTimeout(() => {
-                   knife.style.transform = "translateX(400px) translateY(50px) rotate(-20deg)";
-                }, 1000);
-             
-                // Knife cuts the cake
-                setTimeout(() => {
-                   knife.style.transform = "translateX(420px) translateY(70px) rotate(0deg)";
-                   document.querySelector(".cake-slice")?.classList.add("slice-move");
-                }, 2000);
-             }, 1000);
-             
-          
+        
               // Optionally, remove flame after fade out
               setTimeout(() => {
                 flame.style.display = "none"; 
@@ -1369,43 +1322,35 @@ export default function BirthdayWish() {
               smoke.style.opacity = "1";  // Show smoke
               smoke.style.animation = "smoke-rise 2s ease-out forwards";
             }
-          }, 13000); // 3 seconds after text update  
-          
+          }, 13000); // 3 seconds after text update
+
           setTimeout(() => {
             // Create the knife
             const knife = document.createElement("div");
             knife.className = "knife";
-            const knifeHandle = document.createElement("div");
-            knifeHandle.className = "knife-handle";
-            knife.appendChild(knifeHandle);
             document.body.appendChild(knife);
-          
-            // Move the knife toward the cake
+
+            // Position knife initially off-screen
+            knife.style.position = "absolute";
+            knife.style.width = "100px";
+            knife.style.height = "10px";
+            knife.style.background = "silver";
+            knife.style.borderRadius = "5px";
+            knife.style.left = "-100px";  // Start from outside screen
+            knife.style.top = "300px";    // Adjust as per your cake's height
+            knife.style.transition = "transform 1s ease-in-out";
+        
+            // Move knife to the cake
             setTimeout(() => {
-              knife.style.transform = "translateX(150px) translateY(50px) rotate(-10deg)";
+                knife.style.transform = "translateX(400px) translateY(50px) rotate(-20deg)";
+            }, 1000);
+        
+            // Knife cuts the cake
+            setTimeout(() => {
+                knife.style.transform = "translateX(420px) translateY(70px) rotate(0deg)";
+                document.querySelector(".cake-slice")?.classList.add("slice-move");
             }, 2000);
-          
-            setTimeout(() => {
-              knife.style.transform = "translateX(150px) translateY(100px) rotate(0deg)";
-            }, 3000);
-          
-            setTimeout(() => {
-              // Simulate cake slice effect
-              const cakeMiddle = document.querySelector('.cake-middle') as HTMLElement;
-              if (cakeMiddle) {
-                cakeMiddle.style.clipPath = "polygon(0 0, 100% 0, 100% 70%, 0% 70%)";
-              }
-            }, 4000);
-          
-            // Create the sliced cake piece
-            const cakeSlice = document.createElement("div");
-            cakeSlice.className = "cake-slice";
-            document.body.appendChild(cakeSlice);
-          
-            setTimeout(() => {
-              cakeSlice.style.transform = "translateX(40px) translateY(-10px) rotate(5deg)";
-            }, 4500);
-          }, 14000); // 1 second after candle blowout          
+          }, 15000); // 2 seconds after candle blowout                  
         });
 
         // Handle window resize to adjust styles dynamically
