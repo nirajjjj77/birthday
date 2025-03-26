@@ -1327,31 +1327,51 @@ export default function BirthdayWish() {
               bottom: 20%;
               left: 50%;
               transform: translateX(-50%);
-              width: 100px;
-              height: 100px;
-              background: #ff6b99;
+              width: 120px;
+              height: 120px;
+              background: linear-gradient(135deg, #ff6b99, #ff3366);
               border-radius: 10px;
               display: flex;
               justify-content: center;
               align-items: center;
               cursor: pointer;
-              box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+              box-shadow: 0 5px 15px rgba(0,0,0,0.3);
               transition: transform 0.5s ease-in-out;
+              perspective: 800px;
+            }
+            
+            .gift-box .box {
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(135deg, #ff96b8, #ff4076);
+              border-radius: 10px;
+              box-shadow: inset 0 -5px 8px rgba(0,0,0,0.2);
             }
             
             .gift-box .lid {
               position: absolute;
               top: -10px;
-              width: 100px;
-              height: 20px;
-              background: #ff3366;
-              border-radius: 5px;
+              width: 100%;
+              height: 25px;
+              background: linear-gradient(135deg, #ff2a5f, #ff6b99);
+              border-radius: 8px 8px 3px 3px;
               transition: transform 0.5s ease-in-out;
+              box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             }
             
-            .gift-box .ribbon {
+            .gift-box .ribbon-horizontal {
               position: absolute;
-              width: 10px;
+              width: 100%;
+              height: 12px;
+              background: white;
+              top: 50%;
+              transform: translateY(-50%);
+            }
+            
+            .gift-box .ribbon-vertical {
+              position: absolute;
+              width: 12px;
               height: 100%;
               background: white;
               left: 50%;
@@ -1364,11 +1384,12 @@ export default function BirthdayWish() {
               width: 40px;
               height: 20px;
               background: white;
-              border-radius: 10px;
+              border-radius: 50%;
+              box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
             }
             
             .gift-box.open .lid {
-              transform: translateY(-40px) rotate(-10deg);
+              transform: translateY(-50px) rotate(-10deg);
             }
           `;
       
@@ -1451,39 +1472,51 @@ export default function BirthdayWish() {
               }
             }, 1800);
 
-            // Make slice disappear after sliding
             setTimeout(() => {
               if (slice) slice.classList.add("slice-disappear");
-            }, 3000);
-
-            setTimeout(() => {
-              // Create the gift box
-              const giftBox = document.createElement("div");
-              giftBox.className = "gift-box";
-              giftBox.innerHTML = `
-                <div class="lid"></div>
-                <div class="box"></div>
-                <div class="ribbon"></div>
-                <div class="bow"></div>
-              `;
             
-              document.body.appendChild(giftBox);
-            
-              // Open the gift box after a delay
+              // Remove the cake elements before showing the gift box
               setTimeout(() => {
-                giftBox.classList.add("open");
-                launchConfetti(); // Trigger confetti animation
-              }, 2000);
+                const cakeContainer = document.querySelector(".cake-container");
+                const knife = document.querySelector(".knife");
+                const slice = document.querySelector(".cake-slice");
             
-              // Add click event to open the box
-              giftBox.addEventListener("click", () => {
-                giftBox.classList.add("open");
+                if (cakeContainer) cakeContainer.remove();
+                if (knife) knife.remove();
+                if (slice) slice.remove();
+              }, 1000); // Slight delay before removal for smoother transition
+            
+              // Show the gift box
+              setTimeout(() => {
+                const giftBox = document.createElement("div");
+                giftBox.className = "gift-box";
+                giftBox.innerHTML = `
+                  <div class="lid"></div>
+                  <div class="box">
+                    <div class="ribbon-horizontal"></div>
+                    <div class="ribbon-vertical"></div>
+                  </div>
+                  <div class="bow"></div>
+                `;
+            
+                document.body.appendChild(giftBox);
+            
+                // Open the gift box after a delay
                 setTimeout(() => {
-                  alert("🎉 Surprise! Wishing you a wonderful year ahead! 🎁");
-                }, 500);
-              });
+                  giftBox.classList.add("open");
+                  launchConfetti(); // Trigger confetti animation
+                }, 2000);
             
-            }, 4000); // Adjust timing as needed
+                // Click event for opening the box
+                giftBox.addEventListener("click", () => {
+                  giftBox.classList.add("open");
+                  setTimeout(() => {
+                    alert("🎉 Surprise! Wishing you a wonderful year ahead! 🎁");
+                  }, 500);
+                });
+            
+              }, 2000); // Delay to show gift box after cake is removed
+            }, 3000);            
 
           }, 15000); // After candle blowout                
         });
