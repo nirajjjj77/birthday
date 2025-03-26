@@ -843,10 +843,10 @@ export default function BirthdayWish() {
               height: 10px;
               background: silver;
               border-radius: 2px;
-              top: -50px; /* Start off-screen */
-              left: 50%;
+              top: 80px; /* Start off-screen */
+              left: -50%;
               transform: rotate(0deg);
-              transition: transform 1.5s ease-in-out;
+              transition: transform 1.5s ease-in-out, left 1.5s ease-in-out;
             }
           
             /* Knife Handle */
@@ -1459,10 +1459,9 @@ export default function BirthdayWish() {
               return;
             }
 
-            // Move knife to cake position
-            setTimeout(() => {
-              if (knife) knife.style.transform = "translateX(150px) translateY(80px) rotate(-45deg)";
-            }, 1000);
+            // Move the knife from left to the cutting position
+            knife.style.left = "150px"; // Adjust to align with where the cake slice will appear
+            knife.style.transform = "rotate(-45deg)";
 
             // Reveal slice & cut
             setTimeout(() => {
@@ -1470,7 +1469,7 @@ export default function BirthdayWish() {
                   slice.classList.remove("hidden");
                   slice.classList.add("slice-move");
               }
-            }, 1800);
+            }, 1500);
 
             setTimeout(() => {
               if (slice) slice.classList.add("slice-disappear");
@@ -1511,7 +1510,7 @@ export default function BirthdayWish() {
                 giftBox.addEventListener("click", () => {
                   giftBox.classList.add("open");
                   setTimeout(() => {
-                    alert("🎉 Surprise! Wishing you a wonderful year ahead! 🎁");
+                    alert("🎉 Hello there! janam din ki dher sari subhkamnaye...kuch samgh nahi aa raha kya bole....bharat mata ki jay...keep smiling 🎁");
                   }, 500);
                 });
             
