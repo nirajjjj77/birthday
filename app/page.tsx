@@ -1321,6 +1321,55 @@ export default function BirthdayWish() {
             .slice-move {
               transform: translateX(40px) translateY(-10px) rotate(5deg);
             }
+
+            .gift-box {
+              position: fixed;
+              bottom: 20%;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 100px;
+              height: 100px;
+              background: #ff6b99;
+              border-radius: 10px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              cursor: pointer;
+              box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+              transition: transform 0.5s ease-in-out;
+            }
+            
+            .gift-box .lid {
+              position: absolute;
+              top: -10px;
+              width: 100px;
+              height: 20px;
+              background: #ff3366;
+              border-radius: 5px;
+              transition: transform 0.5s ease-in-out;
+            }
+            
+            .gift-box .ribbon {
+              position: absolute;
+              width: 10px;
+              height: 100%;
+              background: white;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+            
+            .gift-box .bow {
+              position: absolute;
+              top: -20px;
+              width: 40px;
+              height: 20px;
+              background: white;
+              border-radius: 10px;
+            }
+            
+            .gift-box.open .lid {
+              transform: translateY(-40px) rotate(-10deg);
+            }
           `;
       
           // Add styles to document
@@ -1406,6 +1455,35 @@ export default function BirthdayWish() {
             setTimeout(() => {
               if (slice) slice.classList.add("slice-disappear");
             }, 3000);
+
+            setTimeout(() => {
+              // Create the gift box
+              const giftBox = document.createElement("div");
+              giftBox.className = "gift-box";
+              giftBox.innerHTML = `
+                <div class="lid"></div>
+                <div class="box"></div>
+                <div class="ribbon"></div>
+                <div class="bow"></div>
+              `;
+            
+              document.body.appendChild(giftBox);
+            
+              // Open the gift box after a delay
+              setTimeout(() => {
+                giftBox.classList.add("open");
+                launchConfetti(); // Trigger confetti animation
+              }, 2000);
+            
+              // Add click event to open the box
+              giftBox.addEventListener("click", () => {
+                giftBox.classList.add("open");
+                setTimeout(() => {
+                  alert("🎉 Surprise! Wishing you a wonderful year ahead! 🎁");
+                }, 500);
+              });
+            
+            }, 4000); // Adjust timing as needed
 
           }, 15000); // After candle blowout                
         });
